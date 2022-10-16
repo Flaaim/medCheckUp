@@ -15,7 +15,7 @@
                         <form action="{{route('direction.store')}}" method="POST">
                             @csrf
                             <p></p>
-                            <div class="col-4">
+                            <div class="col-5">
                                 <label for="date">Дата выдачи направления</label>
                                 <input type="date" class="form-control" name="date" >
                             </div>
@@ -69,9 +69,9 @@
                             <div class="form-group">
                                 <p><strong>ФИО, должность работника, который будет выдавать направление на медицинский осмотр</strong></p>
                                 <label for="author_fullname">Фамилия Имя Отчество</label>
-                                <input type="text" class="form-control" name="author_fullname" id="author_fullname">
+                                <input type="text" class="form-control" name="author_fullname" id="author_fullname" value="{{$company->fullname}}">
                                 <label for="author_profession">Должность</label>
-                                <input type="text" class="form-control" name="author_profession" id="author_profession">
+                                <input type="text" class="form-control" name="author_profession" id="author_profession" value="{{$company->profession}}">
                             </div>
                             <p></p>
                             <button class="btn btn-primary" type="submit">Создать</button>

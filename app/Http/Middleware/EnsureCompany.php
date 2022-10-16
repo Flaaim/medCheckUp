@@ -18,7 +18,7 @@ class EnsureCompany
     public function handle(Request $request, Closure $next)
     {
        
-        if($request->user()->company->isEmpty()){
+        if(count(Company::all()) == 0){
             return redirect('home')->with('error', 'Ошибка. Сначало необходимо создать компанию!');
         }
         return $next($request);

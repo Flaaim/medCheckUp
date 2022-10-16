@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\DirectionRequest;
 use App\Models\Direction;
+use App\Models\Company;
 
 class DirectionController extends Controller
 {
     public function create(Request $request){
-        $companies = $request->user()->company;
-        return view('directions.create', ['companies' => $companies]);
+        $company = Company::where('status', '1')->first();
+        return view('directions.create', ['company' => $company]);
     }
 
     public function store(Request $request){

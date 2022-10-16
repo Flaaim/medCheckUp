@@ -7,22 +7,17 @@ use App\Models\Company;
 class CompanyService {
 
     public function save($request, $model){
-        $request->merge(['user_id' => $request->user()->id]);
-        $request->merge(['status' => $this->setStatus()]);
-        $model->fill($request->only($model->getFillable()));
+        if(!$model->exists){
+            $request->merge(['user_id'=>$request->user()->id]);
+            $request->merge(['status' => $this->setStatus()]);
+        } 
+        $model->fill($request->all());
         $model->save();
         return true;
     }
 
     public function setStatus(){
-        if(count(Company::all()) == 0) {
-            $status = "1";
-        }elseif(count(Company::all()) != 0 and Company::all()->contains('status', "1")){
-            $status = "1";
-        } else {
-            $status = "0";
-        }
-        return $status;
+        return count(Company::all()) == 0 ? "1" : "0";
     }
 
     public function changeCompany($request){

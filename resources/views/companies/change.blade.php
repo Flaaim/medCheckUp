@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                        <span>Сменить компанию</span>
+                        <span>{{__('company.company_change')}}</span>
                         <span><a href="{{route('home')}}">Назад</a></span>
                     </div>
                         
@@ -19,11 +19,7 @@
                             
                             
                             @foreach($companies as $company)
-                                @if($company->status == '1')
-                                <option value="{{$company->id}}" selected>{{$company->name}}</option>
-                                @else
                                 <option value="{{$company->id}}">{{$company->name}}</option>
-                                @endif
                             @endforeach
                         </select>
                         <p></p>

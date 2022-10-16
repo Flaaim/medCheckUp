@@ -7,7 +7,10 @@
                 @include('components.validation-errors')
                 <div class="card">
                     <div class="card-header">
-                       {{__('company.company_create')}}
+                        <div class="d-flex justify-content-between">
+                            <span>{{__('company.company_create')}}</span>
+                            <span><a href="{{route('home')}}">Вернуться назад</a></span>
+                        </div>
                     </div>
                     <div class="card-body">
                         <form action="{{route('company.store')}}" method="POST">
@@ -39,9 +42,9 @@
                             <p></p>
                             <div class="form-group">
                                 <p><strong>Ниже укажите работника, который будет выдавать направление на медицинский осмотр</strong></p>
-                                <label for="fullname">ФИО полностью</label>
+                                <label for="fullname">{{__('company.fullname')}}</label>
                                 <input type="text" class="form-control" name="fullname" id="fullname">
-                                <label for="profession">Должность</label>
+                                <label for="profession">{{__('company.profession')}}</label>
                                 <input type="text" class="form-control" name="profession" id="profession">
                             </div>
                             <p></p>
