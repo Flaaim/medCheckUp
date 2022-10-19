@@ -10,11 +10,23 @@ return [
     'register_header' => 'Регистрация',
     'name' => 'Имя',
     'email' => 'Адрес эл.почты',
-    'password' => 'Пароль',
+    'password_form' => 'Пароль',
     'confrim_password' => 'Подтвердите пароль',
     'register' => 'Зарегистрироваться',
+    
+    //Login form 
+    'login_header' => 'Авторизация',
+    'remember_me' => 'Запомнить меня',
+    'login' => 'Войти',
+    'forgot_password' => 'Забыли пароль?',
 
-    'failed' => 'Данные для входа не совпадают',
+    //Reset password
+    'reset_password_header' => 'Изменение пароля',
+    'new_password' => 'Новый пароль',
+    'send_password_link' => 'Восстановить',
+    'password_reset' => 'Изменить пароль',
+
+    //'failed' => 'Данные для входа не совпадают',
     'password' => 'Неверный пароль',
     'throttle' => 'Слишком много попыток входа. Пожалуйста попробуйте снова через :seconds секунд',
 

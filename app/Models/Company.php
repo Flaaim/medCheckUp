@@ -14,7 +14,7 @@ class Company extends Model
         'type_of_ownership',
         'economic_activity',
         'okved',
-        'ogrn',
+        'phone',
         'email',
         'profession',
         'fullname',

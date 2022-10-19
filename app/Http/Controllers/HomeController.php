@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\Direction;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -27,6 +28,7 @@ class HomeController extends Controller
     {
         $companies = Company::all();
         $company = Company::where('status', '1')->first();
-        return view('home', ['company' => $company, 'companies' => $companies]);
+        $directions = Direction::where('company_id', $company->id)->get();
+        return view('home', ['company' => $company, 'companies' => $companies, 'directions' => $directions]);
     }
 }

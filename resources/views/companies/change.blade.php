@@ -16,8 +16,6 @@
                         <form action="{{route('company.changeCompany')}}" method="POST">
                             @csrf
                         <select name="id" class="form-control">
-                            
-                            
                             @foreach($companies as $company)
                                 <option value="{{$company->id}}">{{$company->name}}</option>
                             @endforeach

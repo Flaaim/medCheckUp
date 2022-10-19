@@ -22,7 +22,7 @@ Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+    Route::get('/settings', [App\Http\Controllers\HomeController::class, 'index'])->name('settings');
     Route::group(['prefix' => 'companies'], function(){
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('company.create');
         Route::post('/',[App\Http\Controllers\CompanyController::class, 'store'])->name('company.store');
@@ -32,13 +32,20 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
         Route::get('/change', [App\Http\Controllers\CompanyController::class, 'change'])->name('company.change');
         Route::post('/change', [App\Http\Controllers\CompanyController::class, 'changeCompany'])->name('company.changeCompany');
     });
-    
+
     Route::group(['middleware' => 'ensureCompany'], function(){
         Route::group(['prefix' => 'directions'], function(){
             Route::get('/create', [App\Http\Controllers\DirectionController::class, 'create'])->name('direction.create');
             Route::post('/', [App\Http\Controllers\DirectionController::class, 'store'])->name('direction.store');
+            Route::get('/edit/{direction}', [App\Http\Controllers\DirectionController::class, 'edit'])->name('direction.edit');
+            Route::put('/{direction}', [App\Http\Controllers\DirectionController::class, 'update'])->name('direction.update');
+            Route::delete('/{direction}', [App\Http\Controllers\DirectionController::class, 'destroy'])->name('direction.destroy');
+
+
+            Route::get('/download/{direction}', [App\Http\Controllers\DirectionController::class, 'downloadDirection'])->name('direction.download');
         });
     });
+
 
 
 });

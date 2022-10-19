@@ -26,12 +26,14 @@
                             <p></p>
                             <div class="form-group">
                             <label for="economic_activity">{{__('company.economic_activity')}}</label>
-                                <input type="text" class="form-control" id="economic_activity" name="economic_activity" value="{{$company->economic_activity}}">
+                                <input type="text" class="form-control" id="economic_activity" name="economic_activity" value="{{$company->economic_activity}}"><small class="form-text text-muted">*Например 00.00.0 Основной вид деятельности</small>
                             </div>
                             <p></p>
                             <div class="form-group">
-                            <label for="ogrn">{{__('company.ogrn')}}</label>
-                                <input type="text" class="form-control" id="ogrn" name="ogrn" value="{{$company->ogrn}}">
+                            <label for="phone">{{__('company.phone')}}</label>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{$company->phone}}">
+                                <small class="form-text text-muted">* +7 (код города) номер</small>
+                                
                             </div>
                             <p></p>
                             <div class="form-group">

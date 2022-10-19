@@ -21,7 +21,8 @@ class Direction extends Model
         'author_fullname',
         'author_profession',
         'company_id',
-        'date'
+        'date',
+        'filename',
     ];
 
 
@@ -40,6 +41,14 @@ class Direction extends Model
         return Attribute::make(
             set: fn ($value) => implode('-', array_reverse(explode('.', $value))),
             get: fn($value) => implode('.', array_reverse(explode('-', $value))),
+        );
+    }
+
+    protected function date():Attribute
+    {
+        return Attribute::make(
+        set: fn($value) => implode('-', array_reverse(explode('.', $value))),
+        get: fn($value) => implode('.', array_reverse(explode('-', $value))),
         );
     }
 }
