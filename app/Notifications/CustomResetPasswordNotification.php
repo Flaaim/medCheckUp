@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Lang;
 
 class CustomResetPasswordNotification extends ResetPassword
 {
@@ -52,11 +53,11 @@ class CustomResetPasswordNotification extends ResetPassword
     protected function buildMailMessage($url)
     {
         return (new MailMessage)
-            ->subject('Восстановление пароля')
-            ->line('Вы получили данное сообщение потому что запросили восстановление пароля в личный кабинет.')
-            ->action('Восстановить пароль', $url)
-            ->line('Ссылка на восстановление пароля истечет через :count минут.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])
-            ->line('Если вы не запрашивали восстановление пароля. Никаких действий не требуется');
+            ->subject(Lang::get('Восстановление пароля'))
+            ->line(Lang::get('Вы получили данное сообщение потому что запросили восстановление пароля в личный кабинет.'))
+            ->action(Lang::get('Восстановить пароль'), $url)
+            ->line(Lang::get('Ссылка на восстановление пароля истечет через :count минут.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
+            ->line(Lang::get('Если вы не запрашивали восстановление пароля. Никаких действий не требуется'));
     }
 
     /**
