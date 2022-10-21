@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('directions', function (Blueprint $table) {
-            $table->integer('numbering')->unsigned();
+            $table->integer('number')->unsigned();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('directions', function (Blueprint $table) {
-            $table->dropColumn('numbering');
+            $table->dropColumn('number');
         });
     }
 };

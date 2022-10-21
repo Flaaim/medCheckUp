@@ -1,17 +1,32 @@
 
-                    @include('components.flash-message')
                     <div class="card">
                         <div class="card-header">
-                            {{__('direction.change_direction')}}
+                            <div class="d-flex justify-content-between">
+                            <span>{{__('direction.change_direction')}}</span>
+                            <span><a href="{{route('home')}}">Назад</a></span>
+                            </div>
+                            
                         </div>
                         <div class="card-body">
                             <form action="{{route('direction.update', $direction)}}" method="POST">
                                 @csrf 
                                 @METHOD('PUT')
-                            <div class="col-5">
+                            <div class="row">
+                            <div class="col">
                                 <label for="date">{{__('direction.date')}}</label>
                                 <input type="text" class="form-control" name="date" value="{{$direction->date}}">
                             </div>
+                            <div class="col">
+                                <label for="number">{{__('direction.number')}}</label>
+                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{$direction->number}}">
+                                    @error('number')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror  
+                                </div>
+                            </div>
+
                                 <p></p>
                                 <h2>Направление</h2>
                             <div class="form-group">

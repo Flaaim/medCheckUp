@@ -25,6 +25,7 @@ class DirectionRequest extends FormRequest
     {
         return [
             'date' => 'required',
+            'number' => 'required|integer',
             'fullname' => 'required|max:255',
             'birthdate' => 'required|date_format:d.m.Y',
             'department' => 'required|max:255',

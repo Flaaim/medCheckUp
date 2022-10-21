@@ -13,9 +13,9 @@
         @if($company)
             <table class="table">
                 <thead>
-                    <th>№п/п</th>
-                    <th>Дата</th>
-                    <th>Вид</th>
+                    <th>Номер</th>
+                    <th>Дата выдачи</th>
+                    <th>Вид направления</th>
                     <th colspan="2" class="text-center">Кому выдано</th>
                     <th>Действия</th>
                 </thead>

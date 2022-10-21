@@ -31,7 +31,7 @@ class CreateWordDirection {
     public function setValue($template, $direction){
         $company = Company::where('status', '1')->first();
         return $template->setValues(array(
-            'id' => $direction->id,
+            'id' => $direction->number,
             'date' => $direction->date,
             'company_name' => $company->name,
             'company_email' => $company->email,

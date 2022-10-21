@@ -23,6 +23,7 @@ class Direction extends Model
         'company_id',
         'date',
         'filename',
+        'number',
     ];
 
 
