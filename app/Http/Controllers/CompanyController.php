@@ -20,14 +20,16 @@ class CompanyController extends BaseController
     }
     
     public function create(){
-        return view('companies.create');
+        $this->content = view('companies.create')->render();
+        return $this->renderOutput();
     }
     public function store(CreateCompanyRequest $request){
         $this->service->save($request, new Company());
         return redirect()->route('home')->with('success', 'Компания успешно создана');
     }
     public function edit(Company $company){
-        return view('companies.edit', ['company' => $company]);
+        $this->content = view('companies.edit', ['company' => $company])->render();
+        return $this->renderOutput();
     }
     public function update(CreateCompanyRequest $request, Company $company){
         $this->service->save($request, $company);
@@ -45,7 +47,8 @@ class CompanyController extends BaseController
      */
     public function change(){
         $companies = Company::where('status', '0')->where('user_id', $this->user->id)->get();
-        return view('companies.change', ['companies' => $companies]);
+        $this->content = view('companies.change', ['companies' => $companies]);
+        return $this->renderOutput();
     }
     public function changeCompany(ChangeCompanyRequest $request){
         $this->service->changeCompany($request, $this->user);

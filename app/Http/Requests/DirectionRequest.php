@@ -25,13 +25,13 @@ class DirectionRequest extends FormRequest
     {
         return [
             'date' => 'required',
-            'fullname' => 'required|size:255',
+            'fullname' => 'required|max:255',
             'birthdate' => 'required|date_format:d.m.Y',
-            'department' => 'required|size:255',
-            'profession' => 'required|size:255',
-            'factors' => 'required|size:255',
-            'author_fullname' => 'required|size:255',
-            'author_profession' => 'required|size:255'
+            'department' => 'required|max:255',
+            'profession' => 'required|max:255',
+            'factors' => 'required|max:255',
+            'author_fullname' => 'required|max:255',
+            'author_profession' => 'required|max:255'
         ];
     }
 }

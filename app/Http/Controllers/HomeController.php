@@ -32,7 +32,10 @@ class HomeController extends BaseController
         if(count(Company::where('user_id', $this->user->id)->get())){
             $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
             $directions = Direction::where('company_id', $company->id)->get();
-        } 
+        } else {
+            $company = "";
+            $directions = "";
+        }
         
 
         $this->content = view('main.dashboard')->with([

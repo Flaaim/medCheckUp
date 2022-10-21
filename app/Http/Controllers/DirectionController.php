@@ -22,12 +22,13 @@ class DirectionController extends BaseController
         $this->wordTemplate = $wordTemplate;
     }
 
-    public function create(Request $request){
+    public function create(){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-        return view('directions.create', ['company' => $company]);
+        $this->content = view('directions.create', ['company' => $company]);
+        return $this->renderOutput();
     }
 
-    public function store(Request $request){
+    public function store(DirectionRequest $request){
         $this->service->save($request, new Direction());
         return redirect()->route('home')->with('success', 'Направление успешно создано');
     }
@@ -35,15 +36,16 @@ class DirectionController extends BaseController
     public function edit(Direction $direction){
         $gender = ['М', 'Ж'];
         $typeOfDirection = ['Предварительный', 'Периодический'];
-        return view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection]);
+        $this->content = view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection]);
+        return $this->renderOutput();
     }
 
-    public function update(Request $request, Direction $direction){
+    public function update(DirectionRequest $request, Direction $direction){
         $this->service->save($request, $direction);
         return redirect()->route('home')->with('success', 'Направление успешно изменено');
     }
 
-    public function destroy(Request $request, Direction $direction){
+    public function destroy(Direction $direction){
         $direction->delete();
         return redirect()->route('home')->with('success', 'Направление успешно удалено');
     }

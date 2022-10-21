@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\Company;
 
+
 class EnsureCompany
 {
     /**
@@ -17,7 +18,6 @@ class EnsureCompany
      */
     public function handle(Request $request, Closure $next)
     {
-       
         if(count(Company::all()) == 0){
             return redirect('home')->with('error', 'Ошибка. Сначало необходимо создать компанию!');
         }
