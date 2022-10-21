@@ -24,13 +24,13 @@ class CreateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'fullname' => 'required',
-            'profession' => 'required',
+            'name' => 'required|max:255',
+            'fullname' => 'required|max:255',
+            'profession' => 'required|max:255',
             'email' => 'required|email:rfc,dns',
-            'type_of_ownership' => 'required',
-            'economic_activity' => 'required',
-            'phone' => 'required|regex:/(8)[0-9]{10}/',
+            'type_of_ownership' => 'required|max:255',
+            'economic_activity' => 'required|max:255',
+            'phone' => 'required|regex:/(+7)[0-9]{10}/',
         ];
     }
 }

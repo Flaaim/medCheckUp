@@ -8,12 +8,14 @@ use App\Http\Services\CompanyService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\CreateCompanyRequest;
 use App\Http\Requests\ChangeCompanyRequest;
+use App\Http\Controllers\BaseController;
 
-class CompanyController extends Controller
+class CompanyController extends BaseController
 {
     protected $service;
 
     public function __construct(CompanyService $service){
+        parent::__construct();
         $this->service = $service;
     }
     
@@ -33,8 +35,8 @@ class CompanyController extends Controller
     }
     public function destroy(Company $company){
         $company->delete();
-        if(!count(Company::all()) == 0){
-            Company::firstOrFail()->update(['status' => '1']);
+        if(!count(Company::where('user_id', $this->user->id)->get()) == 0){
+            Company::where('user_id', $this->user->id)->firstOrFail()->update(['status' => '1']);
         }
         return redirect()->route('home')->with('success', 'Компания успешно удалена');  
     }
@@ -42,11 +44,11 @@ class CompanyController extends Controller
      * Change company.
      */
     public function change(){
-        $companies = Company::where('status', '0')->get();
+        $companies = Company::where('status', '0')->where('user_id', $this->user->id)->get();
         return view('companies.change', ['companies' => $companies]);
     }
     public function changeCompany(ChangeCompanyRequest $request){
-        $this->service->changeCompany($request);
+        $this->service->changeCompany($request, $this->user);
         return redirect()->route('home')->with('success', 'Компания успешно изменена');
         
     }

@@ -1,3 +1,4 @@
+
 <div class="card">
     <div class="card-header">
         <div class="d-flex justify-content-between">
@@ -47,10 +48,6 @@
                 </tr>
             </table>
                  
-
-
-
-            
         @else
             Комания не зарегистрирована.
         @endif

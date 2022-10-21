@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('type_of_ownership')->nullable();
             $table->string('economic_activity')->nullable();
             $table->string('okved')->nullable();
             $table->string('ogrn')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamps();
 
             $table->bigInteger('user_id')->unsigned()->index();

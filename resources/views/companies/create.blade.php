@@ -49,7 +49,7 @@
                             <div class="form-group">
                             <label for="phone">{{__('company.phone')}}</label>
                                 <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone">
-                                <small class="form-text text-muted">*Пример 89991231512</small>
+                                <small class="form-text text-muted">*Пример +79991231512</small>
                                 @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

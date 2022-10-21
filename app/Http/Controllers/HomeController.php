@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Direction;
 use App\Models\User;
+use App\Http\Controllers\BaseController;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -16,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        parent::__construct();
     }
 
     /**
@@ -26,9 +27,19 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = Company::all();
-        $company = Company::where('status', '1')->first();
-        $directions = Direction::where('company_id', $company->id)->get();
-        return view('home', ['company' => $company, 'companies' => $companies, 'directions' => $directions]);
+        $companies = Company::where('user_id', $this->user->id)->get();
+
+        if(count(Company::where('user_id', $this->user->id)->get())){
+            $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+            $directions = Direction::where('company_id', $company->id)->get();
+        } 
+        
+
+        $this->content = view('main.dashboard')->with([
+            'companies'=> $companies,
+            'company' => $company,
+            'directions' => $directions,        
+            ])->render();
+       return $this->renderOutput();
     }
 }

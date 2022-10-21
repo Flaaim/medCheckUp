@@ -24,14 +24,14 @@ class DirectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'fullname' => 'required',
+            'date' => 'required',
+            'fullname' => 'required|size:255',
             'birthdate' => 'required|date_format:d.m.Y',
-            'gender' => 'required',
-            'department' => 'required',
-            'profession' => 'required',
-            'factors' => 'required',
-            'author_fullname' => 'required',
-            'author_profession' => 'required'
+            'department' => 'required|size:255',
+            'profession' => 'required|size:255',
+            'factors' => 'required|size:255',
+            'author_fullname' => 'required|size:255',
+            'author_profession' => 'required|size:255'
         ];
     }
 }

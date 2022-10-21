@@ -9,19 +9,21 @@ use App\Models\Company;
 use App\Http\Services\DirectionService;
 use App\Http\Services\CreateWordDirection;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\BaseController;
 
-class DirectionController extends Controller
+class DirectionController extends BaseController
 {
     protected $service;
     protected $wordTemplate;
 
     public function __construct(DirectionService $service, CreateWordDirection $wordTemplate){
+        parent::__construct();
         $this->service = $service;
         $this->wordTemplate = $wordTemplate;
     }
 
     public function create(Request $request){
-        $company = Company::where('status', '1')->first();
+        $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         return view('directions.create', ['company' => $company]);
     }
 
