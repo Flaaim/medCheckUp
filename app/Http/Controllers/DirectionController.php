@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\DirectionRequest;
 use App\Models\Direction;
 use App\Models\Company;
@@ -10,6 +11,7 @@ use App\Http\Services\DirectionService;
 use App\Http\Services\CreateWordDirection;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\BaseController;
+use DB;
 
 class DirectionController extends BaseController
 {
@@ -63,5 +65,18 @@ class DirectionController extends BaseController
             return response()->download(storage_path().'\\app\\'.$direction->filename.'.docx')->deleteFileAfterSend(true);;
         }
 
+    }
+
+    public function showDirections(Request $request){
+        if($request->ajax()){
+            $company = Company::where('user_id', $this->user->id)->first();
+            $directions = Direction::where('company_id', $company->id)->get();
+                if($request->keyword != ''){
+                    $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
+                }
+            return response()->json([
+                'directions' => $directions
+            ]);
+        }
     }
 }

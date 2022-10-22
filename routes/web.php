@@ -20,10 +20,13 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 
+
+
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+
 
     Route::group(['prefix' => 'companies'], function(){
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('company.create');
@@ -43,6 +46,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::put('/{direction}', [App\Http\Controllers\DirectionController::class, 'update'])->name('direction.update');
             Route::delete('/{direction}', [App\Http\Controllers\DirectionController::class, 'destroy'])->name('direction.destroy');
 
+            Route::post('/search', [App\Http\Controllers\DirectionController::class, 'showDirections'])->name('directions.search');
 
             Route::get('/download/{direction}', [App\Http\Controllers\DirectionController::class, 'downloadDirection'])->name('direction.download');
         });
