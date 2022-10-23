@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label for="date">{{__('direction.date')}}</label>
-                                    <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" >
+                                    <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{old('date')}}">
                                     @error('date')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col">
                                 <label for="number">{{__('direction.number')}}</label>
-                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" >
+                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{old('number')}}">
                                     @error('number')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
                             <p></p>
                             <div class="form-group">
                                 <label for="fullname">{{__('direction.fullname_worker')}}</label>
-                                <input class="form-control @error('fullname') is-invalid @enderror" type="text" name="fullname" id="fullname">
+                                <input class="form-control @error('fullname') is-invalid @enderror" type="text" name="fullname" id="fullname" value="{{old('fullname')}}">
                                 <small class="form-text text-muted">* Указываем ФИО полностью</small>
                                 @error('fullname')
                                 <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                             <p></p>
                             <div class="form-group">
                                 <label for="birthdate">{{__('direction.birthdate')}}</label>
-                                <input type="text" class="form-control @error('birthdate') is-invalid @enderror" id="birthdate" name="birthdate">
+                                <input type="text" class="form-control @error('birthdate') is-invalid @enderror" id="birthdate" name="birthdate" value="{{old('birthdate')}}">
                                 <small class="form-text text-muted">* Дата рождения в формате ДД.ММ.ГГГГ</small>
                                 @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
                             <p></p>
                             <div class="form-group">
                                 <label for="department">{{__('direction.department')}}</label>
-                                <input type="text" class="form-control @error('department') is-invalid @enderror" id="department" name="department">
+                                <input type="text" class="form-control @error('department') is-invalid @enderror" id="department" name="department" value="{{old('department')}}">
                                 @error('department')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -88,7 +88,7 @@
                             <p></p>
                             <div class="form-group">
                                 <label for="profession">{{__('direction.profession')}}</label>
-                                <input type="text" class="form-control @error('profession') is-invalid @enderror" id="profession" name="profession">
+                                <input type="text" class="form-control @error('profession') is-invalid @enderror" id="profession" name="profession" value="{{old('profession')}}">
                                 @error('profession')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -98,7 +98,7 @@
                             <p></p>
                             <div class="form-group">
                                 <label for="factors">{{__('direction.factors')}}</label>
-                                <input type="text" class="form-control @error('factors') is-invalid @enderror" id="factors" name="factors">
+                                <input type="text" class="form-control @error('factors') is-invalid @enderror" id="factors" name="factors" value="{{old('factors')}}">
                                 <small class="form-text text-muted">* Перечислите пункты факторов через запятую</small>
                                 @error('factors')
                                 <span class="invalid-feedback" role="alert">

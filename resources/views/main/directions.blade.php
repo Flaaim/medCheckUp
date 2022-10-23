@@ -5,7 +5,9 @@
                 {{ __('dashboard.directions') }}
                 </span>
                 @if($company)
+                <span>
                 <a href="{{route('direction.create')}}">{{__('dashboard.new_direction')}}</a>
+                </span>
                 @endif 
             </div>
         </div>
@@ -32,10 +34,18 @@
                 <tbody class="directions">
 
                 </tbody>
+                
             </table>
         @else
             Для того чтобы создать направление на медицинский осмотр необходимо зарегистрировать компанию
         @endif      
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-end">
+            @if($company)
+            <span><a href="{{route('direction.export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
+            @endif
+        </div>
     </div>
 </div>
 

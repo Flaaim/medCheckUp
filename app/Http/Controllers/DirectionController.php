@@ -12,6 +12,8 @@ use App\Http\Services\CreateWordDirection;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\BaseController;
 use DB;
+use App\Exports\DirectionsExport;
+use Excel;
 
 class DirectionController extends BaseController
 {
@@ -79,5 +81,12 @@ class DirectionController extends BaseController
                 'directions' => $directions
             ]);
         }
+    }
+
+    public function export(Company $company){
+        
+        $export = new DirectionsExport($company);
+        return Excel::download($export, 'Directions.xlsx');
+        
     }
 }
