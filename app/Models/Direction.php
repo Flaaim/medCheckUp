@@ -24,6 +24,7 @@ class Direction extends Model
         'date',
         'filename',
         'number',
+        'psycho_factors',
     ];
 
 

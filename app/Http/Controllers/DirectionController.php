@@ -26,11 +26,13 @@ class DirectionController extends BaseController
 
     public function create(){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-        $this->content = view('directions.create', ['company' => $company]);
+        $psychofactors = DB::table('psychofactors')->get();
+        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors]);
         return $this->renderOutput();
     }
 
     public function store(DirectionRequest $request){
+        
         $this->service->save($request, new Direction());
         return redirect()->route('home')->with('success', 'Направление успешно создано');
     }
@@ -47,15 +49,14 @@ class DirectionController extends BaseController
         return redirect()->route('home')->with('success', 'Направление успешно изменено');
     }
 
+
     public function destroy(Direction $direction){
         $direction->delete();
         return redirect()->route('home')->with('success', 'Направление успешно удалено');
     }
 
-
-
     public function downloadDirection(Direction $direction){
-        $template = $this->wordTemplate->createTemplate();
+        $template = $this->wordTemplate->createTemplate($direction);
         $pathToSave = $this->wordTemplate->getPathToSave($direction);
         $createWordFile = $this->wordTemplate->setValue($template, $direction);
         $this->wordTemplate->makeDirectory($pathToSave);

@@ -125,8 +125,40 @@
                                 @enderror
                             </div>
                             <p></p>
+                            <div class="form-check">
+                                <label for="psycho"><strong>{{__('direction.psycho')}}<strong></label>
+                                <input type="checkbox" class="form-check-input" name="psycho" id="psycho">
+                            </div>
+                            <p></p>
+
+                            {{-- Направление на психиатрическое освидетельствование --}}
+
+                            <div class="form-group">
+                                <label for="psycho-factors">
+                                    Укажите вид работ
+                                </label>
+                                <select class="form-control" name="psycho_factors" id="psycho-factors" style="display:none">
+                                    @foreach($psychofactors as $factor)
+                                    <option value="{{$factor->id}}">{{$factor->title}}</option>
+
+                                    @endforeach
+                                </select>
+                            </div>
+                            <p></p>
                             <button class="btn btn-primary" type="submit">{{__('direction.create')}}</button>
                             <a href="#" class="btn btn-primary disabled">Предварительный просмотр</a>
                         </form>
                     </div>
                 </div>
+
+<script>
+    $('#psycho').change(function(){
+        $(this).prop('checked') 
+        ? $('#psycho-factors').show()
+        : $('#psycho-factors').hide()
+    });
+
+    
+    
+   
+</script>

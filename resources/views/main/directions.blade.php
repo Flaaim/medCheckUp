@@ -87,7 +87,7 @@
                     <td><a href="directions/download/`+res.directions[i].id+`">Скачать</a></td>
                     <td><a href="directions/edit/`+res.directions[i].id+`">Изменить</a></td>
                     <td>
-                    <form action="" method="POST">
+                    <form action="directions/`+res.directions[i].id+`" method="POST">
                         @csrf 
                         @METHOD('DELETE')
                         <button type="submit" class="btn btn-link">Удалить</button>

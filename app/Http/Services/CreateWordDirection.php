@@ -15,10 +15,11 @@ class CreateWordDirection {
         $this->files = $filesystem;
     }
     
-    public function createTemplate()
+    public function createTemplate($direction)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/template/template.docx'));
+        $pathToTemplate = $direction->psycho_factors == 0 ? '/template/template.docx' : '/template/templateWithPS.docx';
+        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path($pathToTemplate));
         return $templateProcessor;
     }
 
@@ -47,6 +48,7 @@ class CreateWordDirection {
             'factors' => $direction->factors,
             'author_fullname' => $direction->author_fullname,
             'author_profession' => $direction->author_profession,
+            'psycho_factors' => $direction->psycho_factors,
         ));
     }
 
