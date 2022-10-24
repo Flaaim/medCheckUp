@@ -32,8 +32,8 @@ class DirectionController extends BaseController
     }
 
     public function store(DirectionRequest $request){
-        
-        $this->service->save($request, new Direction());
+        $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+        $this->service->save($request, new Direction(), $company);
         return redirect()->route('home')->with('success', 'Направление успешно создано');
     }
 
@@ -70,7 +70,7 @@ class DirectionController extends BaseController
 
     public function showDirections(Request $request){
         if($request->ajax()){
-            $company = Company::where('user_id', $this->user->id)->first();
+            $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
             $directions = Direction::where('company_id', $company->id)->get();
                 if($request->keyword != ''){
                     $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();

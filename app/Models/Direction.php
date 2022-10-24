@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Psychofactor;
 
 class Direction extends Model
 {
@@ -24,12 +25,15 @@ class Direction extends Model
         'date',
         'filename',
         'number',
-        'psycho_factors',
     ];
 
 
     public function company(){
         return $this->belongsTo(Company::class);
+    }
+
+    public function psychofactors(){
+        return $this->belongsToMany(Psychofactor::class);
     }
 
     /**

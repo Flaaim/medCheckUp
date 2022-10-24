@@ -18,7 +18,7 @@ class CreateWordDirection {
     public function createTemplate($direction)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $pathToTemplate = $direction->psycho_factors == 0 ? '/template/template.docx' : '/template/templateWithPS.docx';
+        $pathToTemplate = $direction->psychofactors->isEmpty() ? '/template/template.docx' : '/template/templateWithPS.docx';
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path($pathToTemplate));
         return $templateProcessor;
     }
@@ -30,7 +30,9 @@ class CreateWordDirection {
     }
 
     public function setValue($template, $direction){
-        $company = Company::where('status', '1')->first();
+        //$company = Company::where('status', '1')->first();
+        $company = $direction->company;
+        $psyFactor = $this->getPsychoFactors($direction);
         return $template->setValues(array(
             'id' => $direction->number,
             'date' => $direction->date,
@@ -48,10 +50,16 @@ class CreateWordDirection {
             'factors' => $direction->factors,
             'author_fullname' => $direction->author_fullname,
             'author_profession' => $direction->author_profession,
-            'psycho_factors' => $direction->psycho_factors,
+            'psycho_factors' => $psyFactor,
         ));
     }
-
+    public function getPsychoFactors($direction){
+        $psyFactor = "";
+        foreach($direction->psychofactors as $factor){
+            $psyFactor .= $factor->title." ";
+        }
+        return $psyFactor;
+    }
     public function makeDirectory($pathToSave){
         if(!$this->files->isDirectory(dirname($pathToSave))){
             mkdir(dirname($pathToSave), 0777, true);

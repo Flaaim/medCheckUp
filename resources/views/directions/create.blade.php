@@ -137,12 +137,14 @@
                                 <label for="psycho-factors">
                                     Укажите вид работ
                                 </label>
-                                <select class="form-control" name="psycho_factors" id="psycho-factors" style="display:none">
+                                <select class="form-control" name="psychofactors[]" id="psycho-factors" style="display:none"  multiple>
                                     @foreach($psychofactors as $factor)
                                     <option value="{{$factor->id}}">{{$factor->title}}</option>
 
                                     @endforeach
-                                </select>
+
+                                </select><br>
+                                <small class="form-text text-muted">* Чтобы выбрать несколько видов зажмите Ctrl</small>
                             </div>
                             <p></p>
                             <button class="btn btn-primary" type="submit">{{__('direction.create')}}</button>
