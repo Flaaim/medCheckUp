@@ -10,7 +10,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">{{__('company.name')}}</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name">         
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name')}}">         
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -20,7 +20,7 @@
                             <p></p>  
                             <div class="form-group">   
                                 <label for="type_of_ownership">{{__('company.type_of_ownership')}}</label>
-                                <input type="text" class="form-control @error('type_of_ownership') is-invalid @enderror" id="type_of_ownership" name="type_of_ownership">
+                                <input type="text" class="form-control @error('type_of_ownership') is-invalid @enderror" id="type_of_ownership" name="type_of_ownership" value="{{old('type_of_ownership')}}">
                                 @error('type_of_ownership')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -30,7 +30,7 @@
                             <p></p>
                             <div class="form-group">
                             <label for="economic_activity">{{__('company.economic_activity')}}</label>
-                                <input type="text" class="form-control @error('economic_activity') is-invalid @enderror" id="economic_activity" name="economic_activity">
+                                <input type="text" class="form-control @error('economic_activity') is-invalid @enderror" id="economic_activity" name="economic_activity" value="{{old('economic_activity')}}">
                                 <small class="form-text text-muted">*Например 00.00.0 Основной вид деятельности</small>
                                 @error('economic_activity')
                                 <span class="invalid-feedback" role="alert">
