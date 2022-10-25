@@ -27,7 +27,7 @@ class CreateCompanyRequest extends FormRequest
             'name' => 'required|max:255',
             'fullname' => 'required|max:255',
             'profession' => 'required|max:255',
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required|email:rfc',
             'type_of_ownership' => 'required|max:255',
             'economic_activity' => 'required|max:255',
             'phone' => 'required|regex:/(\+7)[0-9]{10}/',

@@ -14,6 +14,7 @@ use App\Http\Controllers\BaseController;
 use DB;
 use App\Exports\DirectionsExport;
 use Excel;
+use App\Models\Psychofactor;
 
 class DirectionController extends BaseController
 {
@@ -73,7 +74,7 @@ class DirectionController extends BaseController
     public function showDirections(Request $request){
         if($request->ajax()){
             $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-            $directions = Direction::where('company_id', $company->id)->get();
+            $directions = Direction::where('company_id', $company->id)->orderBy('id', 'DESC')->get();
                 if($request->keyword != ''){
                     $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
                 }
@@ -81,6 +82,13 @@ class DirectionController extends BaseController
                 'directions' => $directions
             ]);
         }
+    }
+
+    public function loadfactors(){
+        $factors = Psychofactor::all();
+        return response()->json([
+            'factors' => $factors
+        ], 200);
     }
 
     public function export(Company $company){

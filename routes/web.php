@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
 
             Route::get('/download/{direction}', [App\Http\Controllers\DirectionController::class, 'downloadDirection'])->name('direction.download');
             Route::get('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
+
+            Route::post('/loadfactors', [App\Http\Controllers\DirectionController::class, 'loadfactors'])->name('direction.loadfactors');
         });
     });
 

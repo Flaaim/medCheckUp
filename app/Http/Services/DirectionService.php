@@ -13,8 +13,7 @@ class DirectionService
         $request->merge(['filename' => $request->fullname]);
         $model->fill($request->all());
         $model->save();
-        
-        $this->insertPsychoFactors($model, $request->psychofactors);
+        $request->psycho == "on" ? $this->insertPsychoFactors($model, $request->psychofactors) : "";
         return true;
     }
 
