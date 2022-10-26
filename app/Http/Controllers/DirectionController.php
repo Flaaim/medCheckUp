@@ -48,7 +48,8 @@ class DirectionController extends BaseController
     }
 
     public function update(DirectionRequest $request, Direction $direction){
-        $this->service->save($request, $direction);
+        $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+        $this->service->save($request, $direction, $company);
         return redirect()->route('home')->with('success', 'Направление успешно изменено');
     }
 
@@ -74,9 +75,10 @@ class DirectionController extends BaseController
     public function showDirections(Request $request){
         if($request->ajax()){
             $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-            $directions = Direction::where('company_id', $company->id)->orderBy('id', 'DESC')->get();
-                if($request->keyword != ''){
-                    $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
+            
+            $directions = Direction::where('company_id', $company->id)->orderBy('date', $request->sortData)->orderBy('number', $request->sortNumber)->get();
+            if($request->keyword != ''){
+                    $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->orderBy('date', $request->sort)->get();
                 }
             return response()->json([
                 'directions' => $directions
@@ -84,11 +86,13 @@ class DirectionController extends BaseController
         }
     }
 
-    public function loadfactors(){
-        $factors = Psychofactor::all();
-        return response()->json([
-            'factors' => $factors
-        ], 200);
+    public function loadfactors(Request $request){
+        if($request->ajax()){
+            $factors = Psychofactor::all();
+            return response()->json([
+                'factors' => $factors
+            ], 200);
+        }
     }
 
     public function export(Company $company){
