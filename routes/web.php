@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::put('/{direction}', [App\Http\Controllers\DirectionController::class, 'update'])->name('direction.update');
             Route::delete('/{direction}', [App\Http\Controllers\DirectionController::class, 'destroy'])->name('direction.destroy');
 
-            Route::post('/search', [App\Http\Controllers\DirectionController::class, 'showDirections'])->name('directions.search');
+            Route::get('/search', [App\Http\Controllers\DirectionController::class, 'showDirections'])->name('directions.search');
 
             Route::get('/download/{direction}', [App\Http\Controllers\DirectionController::class, 'downloadDirection'])->name('direction.download');
             Route::get('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');

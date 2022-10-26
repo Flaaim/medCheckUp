@@ -14,7 +14,7 @@
     <div class="card-body">
         @if($company)
             <table class="table">
-                <form action="" method="POST">
+                <form action="" method="GET">
                     <div class="form-group row">
                         <label for="search" class="col col-form-label">Поиск направления:</label>
                         <div class="col-8">
@@ -42,7 +42,26 @@
                     <th>Действия</th>
                 </thead>
                 <tbody class="directions">
-
+                    @foreach($directions as $direction)
+                    <tr>
+                        <td>{{$direction->number}}</td>
+                        <td>{{$direction->date}}</td>
+                        <td>{{$direction->typeOfDirection}}</td>
+                        <td>{{$direction->fullname}}</td>
+                        <td>{{$direction->profession}}</td>
+                        <td>
+                            <a href="{{route('direction.download', $direction)}}">Скачать</a>
+                            <a href="{{route('direction.edit', $direction)}}">Изменить</a>
+                            <form action="{{route('direction.destroy', $direction)}}" method="POST">
+                                @csrf
+                                @METHOD('DELETE')
+                                <button class="btn btn-link">Удалить</button>
+                            </form>
+                            
+                        
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
                 
             </table>
@@ -63,44 +82,18 @@
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
- });
-
+        }
+    });
         $('#search').on('keyup', function(){
             search();
         });
-        $('#sort-data').click(function(){
-            if(this.value == 'asc'){
-                this.value = 'desc'
-                $('#sort-data-caret').attr('class', 'bi-caret-down');
-            } else {
-                this.value = 'asc'
-                $('#sort-data-caret').attr('class', 'bi-caret-up');
-            }
-            search();
-        });
-        $('#sort-number').click(function(){
-            if(this.value == 'asc'){
-                this.value = 'desc'
-                $('#sort-number-caret').attr('class', 'bi-caret-down');
-            } else {
-                this.value = 'asc'
-                $('#sort-number-caret').attr('class', 'bi-caret-up');
-            }
-            search();
-        });
-        search();
         function search(){
         let keyword = $('#search').val();
-        let sortData = $('#sort-data').val();
-        let sortNumber = $('#sort-number').val();
             $.ajax({
                 url: "{{route('directions.search')}}",
-                method: "POST",
+                method: "GET",
                 data: {
                     keyword:keyword, 
-                    sortData:sortData, 
-                    sortNumber:sortNumber,
                 },
                 dataType: "json",
                 success: function(data){
