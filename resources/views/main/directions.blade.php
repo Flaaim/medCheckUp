@@ -14,7 +14,7 @@
     <div class="card-body">
         @if($company)
             <table class="table">
-                <form action="" method="GET">
+                <form action="" method="POST">
                     <div class="form-group row">
                         <label for="search" class="col col-form-label">Поиск направления:</label>
                         <div class="col-8">
@@ -25,24 +25,26 @@
                 </form>
 
                 <thead>
-                    <th>Номер
-                    <button id="sort-number" class="btn btn-link" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    <th>Номер<button id="id" class="btn btn-link sort active" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th >
                         <div class="d-flex">
-                            <span>
+                        <span>
                             Дата выдачи
-                            
-                            </span>          
-                            <button id="sort-data" class="btn btn-link" value="asc"><i id="sort-data-caret" class="bi bi-caret-up"></i></button>                            
+                        </span>          
+                        <button id="date" class="btn btn-link sort" value="asc"><i id="sort-data-caret" class="bi bi-caret-up"></i></button>                            
                         </div>  
                     </th>
                     <th>Вид направления</th>
-                    <th colspan="2" class="text-center">Кому выдано</th>
+                    <th>ФИО
+                    <button id="fullname" class="btn btn-link sort" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    </th>
+                    <th>Должность</th>
                     <th>Действия</th>
                 </thead>
                 <tbody class="directions">
-                    @foreach($directions as $direction)
+                    {{--                    
+                         @foreach($directions as $direction)
                     <tr>
                         <td>{{$direction->number}}</td>
                         <td>{{$direction->date}}</td>
@@ -61,7 +63,10 @@
                         
                         </td>
                     </tr>
-                    @endforeach
+                    @endforeach 
+                    --}}
+
+                    
                 </tbody>
                 
             </table>
@@ -87,13 +92,28 @@ $.ajaxSetup({
         $('#search').on('keyup', function(){
             search();
         });
-        function search(){
+
+        $('.sort').click(function(){
+            this.val == 'asc' ? this.val = 'desc' : this.val = 'asc'
+            $(this).val(this.val);
+            
+            let field = $(this).attr('id');
+            let sort = $(this).val();
+            $(this).children().attr('class') == 'bi bi-caret-down' ? $(this).children().attr('class', 'bi bi-caret-up') : $(this).children().attr('class', 'bi bi-caret-down');
+            search(sort, field);
+        })
+        
+        function search(sort = 'asc', field = 'id'){
         let keyword = $('#search').val();
+        
+        console.log(field)
             $.ajax({
                 url: "{{route('directions.search')}}",
-                method: "GET",
+                method: "POST",
                 data: {
-                    keyword:keyword, 
+                    keyword:keyword,
+                    sort:sort,
+                    field: field
                 },
                 dataType: "json",
                 success: function(data){
@@ -103,8 +123,12 @@ $.ajaxSetup({
                 console.log('error!')
                 }
             });
-    
         }
+
+        
+        
+
+        search();
         function table_post_row(res){
             let htmlView = "";
             if(res.directions.length <= 0){

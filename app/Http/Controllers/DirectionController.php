@@ -75,6 +75,9 @@ class DirectionController extends BaseController
     public function showDirections(Request $request){
             if($request->ajax()){
                 $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+                $directions = Direction::where('company_id', $company->id)
+                    ->orderBy($request->field, $request->sort)
+                        ->get();
                 if($request->keyword != ''){
                         $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
                     }
