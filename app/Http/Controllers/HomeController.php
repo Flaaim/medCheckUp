@@ -29,11 +29,10 @@ class HomeController extends BaseController
     {
         $companies = Company::where('user_id', $this->user->id)->get();
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-    
+
         $this->content = view('main.dashboard')->with([
             'companies'=> $companies,
             'company' => $company,
-            //'directions' => $directions
             ])->render();
         return $this->renderOutput();
     }

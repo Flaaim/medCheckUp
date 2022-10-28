@@ -42,31 +42,7 @@
                     <th>Должность</th>
                     <th>Действия</th>
                 </thead>
-                <tbody class="directions">
-                    {{--                    
-                         @foreach($directions as $direction)
-                    <tr>
-                        <td>{{$direction->number}}</td>
-                        <td>{{$direction->date}}</td>
-                        <td>{{$direction->typeOfDirection}}</td>
-                        <td>{{$direction->fullname}}</td>
-                        <td>{{$direction->profession}}</td>
-                        <td>
-                            <a href="{{route('direction.download', $direction)}}">Скачать</a>
-                            <a href="{{route('direction.edit', $direction)}}">Изменить</a>
-                            <form action="{{route('direction.destroy', $direction)}}" method="POST">
-                                @csrf
-                                @METHOD('DELETE')
-                                <button class="btn btn-link">Удалить</button>
-                            </form>
-                            
-                        
-                        </td>
-                    </tr>
-                    @endforeach 
-                    --}}
-
-                    
+                <tbody class="directions">   
                 </tbody>
                 
             </table>
@@ -89,31 +65,21 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-        $('#search').on('keyup', function(){
-            search();
-        });
+    const options = {}
 
-        $('.sort').click(function(){
-            this.val == 'asc' ? this.val = 'desc' : this.val = 'asc'
-            $(this).val(this.val);
-            
-            let field = $(this).attr('id');
-            let sort = $(this).val();
-            $(this).children().attr('class') == 'bi bi-caret-down' ? $(this).children().attr('class', 'bi bi-caret-up') : $(this).children().attr('class', 'bi bi-caret-down');
-            search(sort, field);
-        })
-        
-        function search(sort = 'asc', field = 'id'){
+    function search(options){
+        let field = options.field || 'id';
+        let sort = options.sort || 'asc';
+        let page = options.page || 1;
         let keyword = $('#search').val();
-        
-        console.log(field)
             $.ajax({
                 url: "{{route('directions.search')}}",
                 method: "POST",
                 data: {
                     keyword:keyword,
                     sort:sort,
-                    field: field
+                    field: field,
+                    page:page
                 },
                 dataType: "json",
                 success: function(data){
@@ -125,10 +91,25 @@ $.ajaxSetup({
             });
         }
 
-        
+        search(options);
+
+
+
+        $('#search').on('keyup', function(){
+            search(options);
+        });
+
+        $('.sort').click(function(){
+            this.val == 'asc' ? this.val = 'desc' : this.val = 'asc'
+            $(this).val(this.val);
+            options.field = $(this).attr('id');
+            options.sort = $(this).val();
+            $(this).children().attr('class') == 'bi bi-caret-down' ? $(this).children().attr('class', 'bi bi-caret-up') : $(this).children().attr('class', 'bi bi-caret-down');
+            search(options);
+        })
         
 
-        search();
+        
         function table_post_row(res){
             let htmlView = "";
             if(res.directions.length <= 0){
@@ -137,11 +118,11 @@ $.ajaxSetup({
                         <td colspan="6">Направления не найдены!</td>
                     </tr>`;
             }
-            
+           console.log(res)
             for(let i = 0; i < res.directions.length; i++){
                 htmlView += `
                     <tr>
-                        <td>`+ res.directions[i].number +`</td>
+                        <td>`+ res.directions[i].id +`</td>
                         <td>`+ res.directions[i].date +`</td>
                         <td>`+ res.directions[i].typeOfDirection +`</td>
                         <td>`+ res.directions[i].fullname +`</td>
@@ -158,6 +139,19 @@ $.ajaxSetup({
                     </tr>
                 `;
             }
+            htmlView += `<tr>`
+                        for(let i = 1; i <= res.countpages; i++){
+                            htmlView += `<td><button class="paginate" value="`+i+`">`+i+`</button></td>`
+                        }
+            htmlView += `</tr>`
             $('.directions').html(htmlView);
+
+            $('.paginate').click(function(){
+                options.page = $(this).val();
+                search(options);
+            })
+
         }
+
+
 </script>
