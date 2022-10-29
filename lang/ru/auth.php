@@ -5,6 +5,7 @@ return [
     //Navigation 
     'nav_login' => 'Вход',
     'nav_register' => 'Регистрация',
+    'logout' => 'Выйти',
 
     //Register Form
     'register_header' => 'Регистрация',

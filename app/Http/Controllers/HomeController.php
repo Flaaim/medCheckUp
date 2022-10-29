@@ -25,6 +25,12 @@ class HomeController extends BaseController
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function welcome(){
+        $this->content = view('welcome');
+        return $this->renderOutput();
+    }
+
+
     public function index(Request $request)
     {
         $companies = Company::where('user_id', $this->user->id)->get();

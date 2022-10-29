@@ -1,0 +1,10 @@
+html, body {
+    height: 100%;
+  }
+
+#app {
+    flex:1 1 auto!important;
+ }
+ .footer {
+    flex-shrink: 0!important;
+  }
