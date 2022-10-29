@@ -24,6 +24,30 @@ class DirectionService
                 'psychofactor_id' => $factor,
             ]);
         }
+    }
+
+    public function getOffSet($page){
+        return ($page != 1) ? ($page * 5) - 5 : 0;
+    }
+    
+    public function getCompany($user){
+        return Company::where('status', '1')->where('user_id', $user->id)->first();
+    }
+    
+    public function getDirections($request, $company, $offSet){
+        return ($request->keyword == '') ? 
+        DB::table('directions')
+            ->where('company_id', $company->id)
+                ->orderBy($request->field, $request->sort)
+                        ->offset($offSet)->limit(5)->get() : 
+        DB::table('directions')->where('company_id', $company->id)
+                ->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
+        
         
     }
+    
+    public function getCountpages($company){
+        $directions = DB::table('directions')->where('company_id', $company->id)->get();
+        return ceil(count($directions)/5);
+    } 
 }

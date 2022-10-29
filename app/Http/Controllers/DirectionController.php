@@ -73,24 +73,17 @@ class DirectionController extends BaseController
     }
 
     public function showDirections(Request $request){
-
             if($request->ajax()){
-                if($request->page != 1){
-                    $pageNumber = ($request->page * 5) - 5;
-                }else{
-                    $pageNumber = 0;
-                }
-                $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-                $directions = DB::table('directions')->where('company_id', $company->id)
-                    ->orderBy($request->field, $request->sort)
-                    ->offset($pageNumber)->limit(5)->get();
-                $countPages = ceil(count(Direction::where('company_id', $company->id)->get())/5);
-                if($request->keyword != ''){
-                        $directions = Direction::where('company_id', $company->id)->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
-                    }
+                $offSet = $this->service->getOffSet($request->page);
+                $company = $this->service->getCompany($this->user);
+                $directions = $this->service->getDirections($request, $company, $offSet);
+                $countPages = $this->service->getCountPages($company);
+
+                $pageNumber = ($offSet / 5 ) + 1;
                 return response()->json([
                     'directions' => $directions,
-                    'countpages' => $countPages
+                    'countpages' => $countPages,
+                    'pagenumber' => $pageNumber,
                 ]);
             }
     }

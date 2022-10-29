@@ -46,6 +46,11 @@
                 </tbody>
                 
             </table>
+            <table class="table">
+                <tbody class="pagination">
+
+                </tbody>
+            </table>
         @else
             Для того чтобы создать направление на медицинский осмотр необходимо зарегистрировать компанию
         @endif      
@@ -112,6 +117,7 @@ $.ajaxSetup({
         
         function table_post_row(res){
             let htmlView = "";
+            let = htmlPaginateView = "";
             if(res.directions.length <= 0){
                 htmlView += `
                     <tr>
@@ -119,6 +125,7 @@ $.ajaxSetup({
                     </tr>`;
             }
            console.log(res)
+
             for(let i = 0; i < res.directions.length; i++){
                 htmlView += `
                     <tr>
@@ -139,12 +146,22 @@ $.ajaxSetup({
                     </tr>
                 `;
             }
-            htmlView += `<tr>`
+            htmlPaginateView += `<tr>`
                         for(let i = 1; i <= res.countpages; i++){
-                            htmlView += `<td><button class="paginate" value="`+i+`">`+i+`</button></td>`
+                            if(i == res.pagenumber){
+                                htmlPaginateView += `<td>
+                            <button class="btn btn-link paginate" value="`+i+`" disabled>`+i+`</button>
+                            </td>`
+                            } else {
+                                htmlPaginateView += `<td>
+                            <button class="btn btn-link paginate" value="`+i+`">`+i+`</button>
+                            </td>`
+                            }
+                            
                         }
-            htmlView += `</tr>`
+                        htmlPaginateView += `</tr>`
             $('.directions').html(htmlView);
+            $('.pagination').html(htmlPaginateView);
 
             $('.paginate').click(function(){
                 options.page = $(this).val();
