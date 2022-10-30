@@ -26,8 +26,8 @@ class DirectionService
         }
     }
 
-    public function getOffSet($page){
-        return ($page != 1) ? ($page * 5) - 5 : 0;
+    public function getOffSet($page, $limit){
+        return ($page != 1) ? ($page * $limit) - $limit : 0;
     }
     
     public function getCompany($user){
@@ -39,15 +39,29 @@ class DirectionService
         DB::table('directions')
             ->where('company_id', $company->id)
                 ->orderBy($request->field, $request->sort)
-                        ->offset($offSet)->limit(5)->get() : 
+                        ->offset($offSet)->limit($request->limit)
+                            ->get() : 
         DB::table('directions')->where('company_id', $company->id)
-                ->where('fullname', 'LIKE', '%'.$request->keyword.'%')->get();
+            ->orderBy($request->field, $request->sort)
+                    ->offset($offSet)->limit($request->limit)
+                        ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
+                            ->get();
         
         
     }
     
-    public function getCountpages($company){
-        $directions = DB::table('directions')->where('company_id', $company->id)->get();
-        return ceil(count($directions)/5);
+    public function getCountpages($request, $company){
+        if($request->keyword == ""){
+            $directions = DB::table('directions')
+                ->where('company_id', $company->id)
+                    ->get();
+        } else {
+            $directions = DB::table('directions')
+                ->where('company_id', $company->id)
+                        ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
+                            ->get();
+        }
+
+        return ceil(count($directions)/$request->limit);
     } 
 }

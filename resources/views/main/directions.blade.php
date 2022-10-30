@@ -13,16 +13,30 @@
         </div>
     <div class="card-body">
         @if($company)
-            <table class="table">
-                <form action="" method="POST">
+        <div class="table-responsive">
+        <table class="table">
+
+                
                     <div class="form-group row">
-                        <label for="search" class="col col-form-label">Поиск направления:</label>
-                        <div class="col-8">
-                        <input type="text" id="search" class="form-control" placeholder="Введите фамилию для поиска">
+
+                        <div class="col-sm-4">
+                        <label for="limit" >
+                                Кол-во направлений на странице:
+                            </label>
+                        <select name="limit" id="limit" class="form-control ">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                        </div>
+                            
+                        <div class="col-sm-8">
+                            <label for="search"><strong>Поиск направления:</strong></label>
+                            <input type="text" id="search" class="form-control" placeholder="Введите фамилию для поиска">
                         </div>
                         
                     </div>
-                </form>
+                
 
                 <thead>
                     <th>Номер<button id="id" class="btn btn-link sort active" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
@@ -46,6 +60,8 @@
                 </tbody>
                 
             </table>
+        </div>   
+            
             <table class="table">
                 <tbody class="pagination">
 
@@ -76,6 +92,7 @@ $.ajaxSetup({
         let field = options.field || 'id';
         let sort = options.sort || 'asc';
         let page = options.page || 1;
+        let limit = options.limit || 5;
         let keyword = $('#search').val();
             $.ajax({
                 url: "{{route('directions.search')}}",
@@ -84,7 +101,8 @@ $.ajaxSetup({
                     keyword:keyword,
                     sort:sort,
                     field: field,
-                    page:page
+                    page:page,
+                    limit:limit
                 },
                 dataType: "json",
                 success: function(data){
@@ -98,8 +116,11 @@ $.ajaxSetup({
 
         search(options);
 
-
-
+        $('#limit').change(function(){
+            options.limit = $(this).children('option:selected').val()
+            search(options)
+        })  
+       
         $('#search').on('keyup', function(){
             search(options);
         });
@@ -150,7 +171,7 @@ $.ajaxSetup({
                         for(let i = 1; i <= res.countpages; i++){
                             if(i == res.pagenumber){
                                 htmlPaginateView += `<td>
-                            <button class="btn btn-link paginate" value="`+i+`" disabled>`+i+`</button>
+                            <button class="btn btn-primary paginate" value="`+i+`" disabled>`+i+`</button>
                             </td>`
                             } else {
                                 htmlPaginateView += `<td>

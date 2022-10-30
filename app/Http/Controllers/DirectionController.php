@@ -74,16 +74,17 @@ class DirectionController extends BaseController
 
     public function showDirections(Request $request){
             if($request->ajax()){
-                $offSet = $this->service->getOffSet($request->page);
+                $offSet = $this->service->getOffSet($request->page, $request->limit);
                 $company = $this->service->getCompany($this->user);
                 $directions = $this->service->getDirections($request, $company, $offSet);
-                $countPages = $this->service->getCountPages($company);
+                $countPages = $this->service->getCountPages($request, $company);
 
-                $pageNumber = ($offSet / 5 ) + 1;
+                $pageNumber = ($offSet / $request->limit ) + 1;
                 return response()->json([
                     'directions' => $directions,
                     'countpages' => $countPages,
                     'pagenumber' => $pageNumber,
+                    'limit' => $request->limit
                 ]);
             }
     }

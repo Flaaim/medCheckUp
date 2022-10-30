@@ -91,7 +91,7 @@
                     <div class="col">
                         <div class="d-flex justify-content-center my-3">
                             <p class="text-center">
-                            made by Alexander Grigorev. По вопросам и предложениям flaiem@gmail.com
+                               По вопросам и предложениям flaiem@gmail.com
                             </p>
                            
                         </div>
