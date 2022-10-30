@@ -21,10 +21,10 @@
 
                         <div class="col-sm-4">
                         <label for="limit" >
-                                Кол-во направлений на странице:
+                                Кол-во записей на странице:
                             </label>
                         <select name="limit" id="limit" class="form-control ">
-                            <option value="5">5</option>
+                            <option value='5'>5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
                         </select>
@@ -54,6 +54,7 @@
                     <button id="fullname" class="btn btn-link sort" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th>Должность</th>
+                    <th>Псих. осв.</th>
                     <th>Действия</th>
                 </thead>
                 <tbody class="directions">   
@@ -61,12 +62,16 @@
                 
             </table>
         </div>   
-            
-            <table class="table">
-                <tbody class="pagination">
+            <div class="d-flex justify-content-start mt-3">
+                <div class="d-flex show-records rows mx-3">
+                    
+                </div>
+                <div class="d-flex pagination mx-3">
 
-                </tbody>
-            </table>
+                </div>
+            </div>
+            
+
         @else
             Для того чтобы создать направление на медицинский осмотр необходимо зарегистрировать компанию
         @endif      
@@ -138,7 +143,8 @@ $.ajaxSetup({
         
         function table_post_row(res){
             let htmlView = "";
-            let = htmlPaginateView = "";
+            let htmlPaginateView = "";
+            let htmlRecordsView = "";
             if(res.directions.length <= 0){
                 htmlView += `
                     <tr>
@@ -155,6 +161,9 @@ $.ajaxSetup({
                         <td>`+ res.directions[i].typeOfDirection +`</td>
                         <td>`+ res.directions[i].fullname +`</td>
                         <td>`+ res.directions[i].profession +`</td>
+                        <td>`
+                        res.directions[i].psychofactors.length == 0 ? htmlView += `Нет` : htmlView += `Да`;
+                        htmlView +=  `</td>
                         <td><a href="directions/download/`+res.directions[i].id+`">Скачать</a></td>
                         <td><a href="directions/edit/`+res.directions[i].id+`">Изменить</a></td>
                         <td>
@@ -167,23 +176,25 @@ $.ajaxSetup({
                     </tr>
                 `;
             }
-            htmlPaginateView += `<tr>`
+            htmlPaginateView += `<div>`
                         for(let i = 1; i <= res.countpages; i++){
                             if(i == res.pagenumber){
-                                htmlPaginateView += `<td>
-                            <button class="btn btn-primary paginate" value="`+i+`" disabled>`+i+`</button>
-                            </td>`
+                                htmlPaginateView += `
+                            <button class="btn btn-outline-lighpaginate" value="`+i+`" disabled>`+i+`</button>
+                            `
                             } else {
-                                htmlPaginateView += `<td>
-                            <button class="btn btn-link paginate" value="`+i+`">`+i+`</button>
-                            </td>`
+                                htmlPaginateView += `
+                            <button class="btn btn-outline-ligh paginate" value="`+i+`">`+i+`</button>
+                            `
                             }
                             
                         }
-                        htmlPaginateView += `</tr>`
+
+            htmlPaginateView += `</div>`
+            
             $('.directions').html(htmlView);
             $('.pagination').html(htmlPaginateView);
-
+            $('.show-records').html(htmlRecordsView);
             $('.paginate').click(function(){
                 options.page = $(this).val();
                 search(options);

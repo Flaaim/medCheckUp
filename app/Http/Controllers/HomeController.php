@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Direction;
 use App\Models\User;
 use App\Http\Controllers\BaseController;
+use Illuminate\Support\Collection;
 
 class HomeController extends BaseController
 {

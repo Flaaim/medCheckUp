@@ -78,13 +78,13 @@ class DirectionController extends BaseController
                 $company = $this->service->getCompany($this->user);
                 $directions = $this->service->getDirections($request, $company, $offSet);
                 $countPages = $this->service->getCountPages($request, $company);
-
+                
                 $pageNumber = ($offSet / $request->limit ) + 1;
                 return response()->json([
                     'directions' => $directions,
                     'countpages' => $countPages,
                     'pagenumber' => $pageNumber,
-                    'limit' => $request->limit
+                    'limit' => (int) $request->limit,
                 ]);
             }
     }

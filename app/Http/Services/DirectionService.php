@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 use App\Models\Company;
+use App\Models\Direction;
 use DB;
 
 class DirectionService 
@@ -17,14 +18,6 @@ class DirectionService
         return true;
     }
 
-    public function insertPsychoFactors($model, $psychofactors){
-        foreach($psychofactors as $factor){
-            DB::table('direction_psychofactor')->insert([
-                'direction_id' => $model->id,
-                'psychofactor_id' => $factor,
-            ]);
-        }
-    }
 
     public function getOffSet($page, $limit){
         return ($page != 1) ? ($page * $limit) - $limit : 0;
@@ -36,30 +29,28 @@ class DirectionService
     
     public function getDirections($request, $company, $offSet){
         return ($request->keyword == '') ? 
-        DB::table('directions')
-            ->where('company_id', $company->id)
-                ->orderBy($request->field, $request->sort)
-                        ->offset($offSet)->limit($request->limit)
-                            ->get() : 
-        DB::table('directions')->where('company_id', $company->id)
+        Direction::with('psychofactors')->where('company_id', $company->id)
+        ->orderBy($request->field, $request->sort)
+                ->skip($offSet)->take($request->limit)
+                    ->get() : 
+        Direction::where('company_id', $company->id)
             ->orderBy($request->field, $request->sort)
-                    ->offset($offSet)->limit($request->limit)
+                    ->skip($offSet)->take($request->limit)
                         ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
                             ->get();
         
         
     }
+
+            
     
     public function getCountpages($request, $company){
         if($request->keyword == ""){
-            $directions = DB::table('directions')
-                ->where('company_id', $company->id)
-                    ->get();
+            $directions = Direction::where('company_id', $company->id)->get();
         } else {
-            $directions = DB::table('directions')
-                ->where('company_id', $company->id)
+            $directions = Direction::where('company_id', $company->id)
                         ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
-                            ->get();
+                                ->get();
         }
 
         return ceil(count($directions)/$request->limit);
