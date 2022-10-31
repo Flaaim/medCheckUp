@@ -84,7 +84,10 @@
                             <p></p>
                             {{-- Направление на психиатрическое освидетельствование --}}
                             @if(count($oldPsychofactors) > 0)
-                            <input type="hidden" name="psycho" value="on">
+                            <div class="form-check">
+                                <label for="psycho"><strong>{{__('direction.psycho')}}<strong></label>
+                                <input type="checkbox" class="form-check-input" name="psycho" id="psycho" checked>
+                            </div>
                             <div class="form-group select">
                                 <label for="psycho-factors">
                                     Укажите вид работ
@@ -98,6 +101,17 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            </div>
+                            @else
+                            <div class="form-check">
+                                <label for="psycho"><strong>{{__('direction.psycho')}}<strong></label>
+                                <input type="checkbox" class="form-check-input" name="psycho" id="psycho">
+                            </div>
+
+                            {{-- Направление на психиатрическое освидетельствование --}}
+
+                            <div class="form-group select">
+
                             </div>
                             @endif
                             <p></p>

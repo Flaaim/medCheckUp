@@ -14,18 +14,11 @@ class DirectionService
         $request->merge(['filename' => $request->fullname]);
         $model->fill($request->all());
         $model->save();
-        $request->psycho == "on" ? $this->insertPsychoFactors($model, $request->psychofactors) : "";
+        $this->insertPsychoFactors($model, $request->psychofactors);
         return true;
     }
     public function insertPsychoFactors($model, $psychofactors){
-        $model->psychofactors()->sync($psychofactors);
-        /*foreach($psychofactors as $factor){
-            DB::table('direction_psychofactor')->insert([
-                'direction_id' => $model->id,
-                'psychofactor_id' => $factor,
-            ]);
-        }*/
-        
+        $model->psychofactors()->sync($psychofactors);  
     }
 
     public function getOffSet($page, $limit){

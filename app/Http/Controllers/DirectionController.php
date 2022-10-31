@@ -34,7 +34,7 @@ class DirectionController extends BaseController
         return $this->renderOutput();
     }
 
-    public function store(Request $request){
+    public function store(DirectionRequest $request){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         $this->service->save($request, new Direction(), $company);
         return redirect()->route('home')->with('success', 'Направление успешно создано');
