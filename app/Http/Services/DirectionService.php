@@ -17,7 +17,16 @@ class DirectionService
         $request->psycho == "on" ? $this->insertPsychoFactors($model, $request->psychofactors) : "";
         return true;
     }
-
+    public function insertPsychoFactors($model, $psychofactors){
+        $model->psychofactors()->sync($psychofactors);
+        /*foreach($psychofactors as $factor){
+            DB::table('direction_psychofactor')->insert([
+                'direction_id' => $model->id,
+                'psychofactor_id' => $factor,
+            ]);
+        }*/
+        
+    }
 
     public function getOffSet($page, $limit){
         return ($page != 1) ? ($page * $limit) - $limit : 0;
