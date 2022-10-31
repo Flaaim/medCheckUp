@@ -34,7 +34,7 @@ class DirectionController extends BaseController
         return $this->renderOutput();
     }
 
-    public function store(DirectionRequest $request){
+    public function store(Request $request){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         $this->service->save($request, new Direction(), $company);
         return redirect()->route('home')->with('success', 'Направление успешно создано');
@@ -43,7 +43,9 @@ class DirectionController extends BaseController
     public function edit(Direction $direction){
         $gender = ['М', 'Ж'];
         $typeOfDirection = ['Предварительный', 'Периодический'];
-        $this->content = view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection]);
+        $oldPsychofactors = $direction->psychofactors;
+        $psychofactors = Psychofactor::all();
+        $this->content = view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors]);
         return $this->renderOutput();
     }
 

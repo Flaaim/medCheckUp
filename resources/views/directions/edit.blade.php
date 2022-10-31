@@ -82,6 +82,25 @@
                                 <input type="text" class="form-control" name="author_profession" id="author_profession" value="{{$direction->author_profession}}">
                             </div>
                             <p></p>
+                            {{-- Направление на психиатрическое освидетельствование --}}
+                            @if(count($oldPsychofactors) > 0)
+                            <input type="hidden" name="psycho" value="on">
+                            <div class="form-group select">
+                                <label for="psycho-factors">
+                                    Укажите вид работ
+                                </label>
+                                <select name="psychofactors[]" id="psycho-factors" class="form-control" multiple>
+                                    @foreach($psychofactors as $factor)
+                                        @if($oldPsychofactors->contains($factor))
+                                        <option value="{{$factor->id}}" selected>{{$factor->alias}}</option>
+                                        @else
+                                        <option value="{{$factor->id}}">{{$factor->alias}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            @endif
+                            <p></p>
                             <button class="btn btn-primary" type="submit">{{__('direction.change')}}</button>
                             <a href="#" class="btn btn-primary disabled">Предварительный просмотр</a>
                             </form>
