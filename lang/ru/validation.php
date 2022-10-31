@@ -6,6 +6,7 @@ return [
     'regex' => 'Неверный формат :attribute',
     'unique' => 'Данный :attribute уже зарегистрирован',
     'confirmed' => 'Поля :attribute не совпадают',
+    'integer' => 'Поле :attribute должен быть числом.',
     'min' => [
         'string' => 'Поле :attribute должно быть как минимум :min символов.',
     ],
