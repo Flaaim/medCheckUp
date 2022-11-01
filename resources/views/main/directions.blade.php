@@ -24,9 +24,9 @@
                                 Кол-во записей на странице:
                             </label>
                         <select name="limit" id="limit" class="form-control ">
-                            <option value='5'>5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
+                            <option value='10'>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
                         </select>
                         </div>
                             
@@ -62,12 +62,10 @@
                 
             </table>
         </div>   
-            <div class="d-flex justify-content-start mt-3">
-                <div class="d-flex show-records rows mx-3">
-                    
+            <div class="d-flex justify-content-between mt-3">
+                <div class="d-flex align-self-center show-records rows mx-3">
                 </div>
                 <div class="d-flex pagination mx-3">
-
                 </div>
             </div>
             
@@ -97,7 +95,7 @@ $.ajaxSetup({
         let field = options.field || 'id';
         let sort = options.sort || 'asc';
         let page = options.page || 1;
-        let limit = options.limit || 5;
+        let limit = options.limit || 10;
         let keyword = $('#search').val();
             $.ajax({
                 url: "{{route('directions.search')}}",
@@ -189,9 +187,10 @@ $.ajaxSetup({
                             }
                             
                         }
-
             htmlPaginateView += `</div>`
-            
+            htmlRecordsView += `<div>
+                        Показаны результаты с `+res.firstLast['first']+` по `+res.firstLast['last']+` Всего: `+res.firstLast['all']+` 
+                        </div>`
             $('.directions').html(htmlView);
             $('.pagination').html(htmlPaginateView);
             $('.show-records').html(htmlRecordsView);

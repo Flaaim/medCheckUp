@@ -35,26 +35,45 @@ class DirectionService
         ->orderBy($request->field, $request->sort)
                 ->skip($offSet)->take($request->limit)
                     ->get() : 
-        Direction::where('company_id', $company->id)
+        Direction::with('psychofactors')->where('company_id', $company->id)
             ->orderBy($request->field, $request->sort)
                     ->skip($offSet)->take($request->limit)
                         ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
-                            ->get();
-        
-        
+                            ->get();   
     }
 
-            
-    
-    public function getCountpages($request, $company){
+    public function getDirectionsElements($request, $company){
         if($request->keyword == ""){
-            $directions = Direction::where('company_id', $company->id)->get();
+            return Direction::where('company_id', $company->id)->get();
         } else {
-            $directions = Direction::where('company_id', $company->id)
+            return Direction::where('company_id', $company->id)
                         ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
                                 ->get();
         }
-
-        return ceil(count($directions)/$request->limit);
+    }
+    public function getCountDirections($directions) {
+        return count($directions);
+    }
+    public function getCountpages($request, $company, $limit){
+        $directions = $this->getCountDirections($this->getDirectionsElements($request, $company));
+        return ceil($directions/$limit);
     } 
+
+    public function getPageNumber($offSet, $limit){
+        return ($offSet / $limit) + 1;
+    }
+
+    public function getRows($request, $limit, $pageNumber, $company){
+        $directions = $this->getCountDirections($this->getDirectionsElements($request, $company));
+        $multiplier = ($pageNumber - 1) * $limit;
+        $firstLast = ['first' => 1, 'last' => (int)$limit, 'all' => $directions];
+        
+        if($pageNumber != 1){
+            $firstLast['first'] += $multiplier;
+            $firstLast['last'] += $multiplier;
+        }
+        $firstLast['last'] >= $directions ? $firstLast['last'] = $directions : '';
+
+        return $firstLast;
+    }
 }
