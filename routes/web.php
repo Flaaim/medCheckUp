@@ -49,7 +49,10 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::post('/search', [App\Http\Controllers\DirectionController::class, 'showDirections'])->name('directions.search');
 
             Route::get('/download/{direction}', [App\Http\Controllers\DirectionController::class, 'downloadDirection'])->name('direction.download');
-            Route::get('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
+
+            Route::get('/export/{company}', [App\Http\Controllers\DirectionController::class, 'showExport'])->name('direction.show_export');
+
+            Route::post('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
         });
     });
 

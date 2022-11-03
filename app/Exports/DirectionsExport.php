@@ -4,13 +4,20 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Models\Company;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DirectionsExport implements FromCollection, WithHeadings
 {
     protected $company;
+    protected $startDate;
+    protected $endDate;
 
-    public function __construct($company){
+    public function __construct(Company $company, Request $request){
         $this->company = $company;
+        $this->startDate = Carbon::parse($request->startDate);
+        $this->endDate = Carbon::parse($request->endDate);
     }
 
 
@@ -49,6 +56,11 @@ class DirectionsExport implements FromCollection, WithHeadings
     }
 
     public function getDirections(){
-        return $this->company->directions()->get();
+        
+        return $this->company
+            ->directions()
+                ->whereDate('created_at', '>=', $this->startDate)
+                ->whereDate('created_at', '<=', $this->endDate)
+                    ->get();
     }
 }

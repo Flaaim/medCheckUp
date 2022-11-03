@@ -43,7 +43,7 @@
     <div class="card-footer">
         <div class="d-flex justify-content-end">
             @if($company)
-            <span><a href="{{route('direction.export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
+            <span><a href="{{route('direction.show_export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
             @endif
         </div>
     </div>

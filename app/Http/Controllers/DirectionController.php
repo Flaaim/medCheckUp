@@ -82,11 +82,17 @@ class DirectionController extends BaseController
             ]);
         }
     }
-
-    public function export(Company $company){
+    public function showExport(Company $company){
         
-        $export = new DirectionsExport($company);
-        return Excel::download($export, 'Directions.xlsx');
+        $this->content = view('directions.export', ['company' => $company])->render();
+        return $this->renderOutput();
+
+    }
+
+    public function export(Request $request, Company $company){
+        $export = new DirectionsExport($company, $request);
+       
+        return Excel::download($export, 'export.xlsx');
         
     }
 }
