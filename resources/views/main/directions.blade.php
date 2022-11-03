@@ -14,7 +14,7 @@
     <div class="card-body">
         @if($company)
         <div class="table-responsive">
-        <table class="table">
+        <table class="table table-striped">
 
                 
                     <div class="form-group row">
@@ -39,23 +39,23 @@
                 
 
                 <thead>
-                    <th>Номер<button id="id" class="btn btn-link sort active" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    <th>Номер<button id="id" class="btn btn-link sort active" value="desc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th >
                         <div class="d-flex">
                         <span>
                             Дата выдачи
                         </span>          
-                        <button id="date" class="btn btn-link sort" value="asc"><i id="sort-data-caret" class="bi bi-caret-up"></i></button>                            
+                        <button id="date" class="btn btn-link sort" value="desc"><i id="sort-data-caret" class="bi bi-caret-up"></i></button>                            
                         </div>  
                     </th>
                     <th>Вид направления</th>
                     <th>ФИО
-                    <button id="fullname" class="btn btn-link sort" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    <button id="fullname" class="btn btn-link sort" value="desc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th>Должность</th>
                     <th>Псих. осв.</th>
-                    <th>Действия</th>
+                    <th colspan="3">Действия</th>
                 </thead>
                 <tbody class="directions">   
                 </tbody>
@@ -93,7 +93,7 @@ $.ajaxSetup({
 
     function search(options){
         let field = options.field || 'id';
-        let sort = options.sort || 'asc';
+        let sort = options.sort || 'desc';
         let page = options.page || 1;
         let limit = options.limit || 10;
         let keyword = $('#search').val();
