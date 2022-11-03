@@ -77,7 +77,7 @@
     <div class="card-footer">
         <div class="d-flex justify-content-end">
             @if($company)
-            <span><a href="{{route('direction.export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
+            <span><a href="{{route('direction.show_export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
             @endif
         </div>
     </div>
@@ -154,7 +154,7 @@ $.ajaxSetup({
             for(let i = 0; i < res.directions.length; i++){
                 htmlView += `
                     <tr>
-                        <td>`+ res.directions[i].id +`</td>
+                        <td>`+ res.directions[i].number +`</td>
                         <td>`+ res.directions[i].date +`</td>
                         <td>`+ res.directions[i].typeOfDirection +`</td>
                         <td>`+ res.directions[i].fullname +`</td>
