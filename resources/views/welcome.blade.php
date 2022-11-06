@@ -1,43 +1,44 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="d-flex flex-column align-items-center mt-5">
+            <div class="d-flex flex-column align-items-center mt-3">
                 
-                <h1 class="mb-3">Направления на медосмотр</h1>
+                <h1 class="welcome-page mb-3">Направления на медосмотр</h1>
                 <p class="text-center">
                     Оптимизация выдачи направлений на предварительный и периодической медицинский осмотр работникам в соответсвии с требованиями Приказа Минздрава России от 28.01.2021 N 29н
                 </p>
-                <div class="mt-3">
-                    <a class="btn btn-outline-primary btn-lg" href="{{route('register')}}">Начать</a>
-                </div>
             </div>
 
             <div class="d-flex flex-column align-items-center mt-5">
-                <h2>Порядок работы</h2>
+                <h2 class="welcome-page">Как начать?</h2>
+                <p>
+                    Ниже приведен порядок работы по подготовке и выдаче направлений в приложении.
+                </p>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <div class="card mx-3">
-                    <div class="card-header">
-                       Регистрируем компанию
-                    </div>
                     <div class="card-body">
-                        Вносим контактную информацию компании
+                        <h5 class="card-title"> <strong>1. Регистрация</strong> </h5>
+                            <ul>
+                                <li>Регистрируемся на сайте</li>
+                                <li>Регистрируем на сайте компанию</li>  
+                            </ul> 
                     </div>
                 </div>
                 <div class="card mx-3">
-                    <div class="card-header">
-                       Создаем направление
-                    </div>
                     <div class="card-body">
-                        Заполняем форму направления на медицинский осмотр
+                        <h5 class="card-title"> <strong>2. Оформление</strong> </h5>
+                            <ul>
+                                <li>Заполняем форму направления</li>
+                            </ul>
                     </div>
                 </div>
                 <div class="card mx-3">
-                    <div class="card-header">
-                       Скачиваем готовое направление
-                    </div>
                     <div class="card-body">
-                        После создания направления, его можно скачать, изменить или удалить
+                        <h5 class="card-title"> <strong>3. Выдача</strong> </h5>
+                        <ul>
+                            <li>Скачиваем и печатаем направление</li>
+                        </ul>
                     </div>
                 </div>
             </div>

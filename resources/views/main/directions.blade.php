@@ -15,10 +15,7 @@
         @if($company)
         <div class="table-responsive">
         <table class="table table-striped">
-
-                
                     <div class="form-group row">
-
                         <div class="col-sm-4">
                         <label for="limit" >
                                 Кол-во записей на странице:
