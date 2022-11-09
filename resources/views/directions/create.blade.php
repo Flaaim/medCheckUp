@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col">
                                 <label for="number">{{__('direction.number')}}</label>
-                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{$lastNumber}}">
+                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{$currentNumber}}">
                                     @error('number')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

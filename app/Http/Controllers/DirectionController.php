@@ -30,8 +30,8 @@ class DirectionController extends BaseController
     public function create(){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         $psychofactors = DB::table('psychofactors')->get();
-        $lastNumber = $this->service->getLastNumber($company);
-        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'lastNumber' => $lastNumber]);
+        $currentNumber = $this->service->getLastNumber($company) + 1;
+        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber]);
         return $this->renderOutput();
     }
 
