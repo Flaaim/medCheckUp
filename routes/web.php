@@ -56,3 +56,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
 
 
 });
+
+Route::any('/404', function(){
+    return response()->view('errors.404', [], 404);
+})->name('fallback');

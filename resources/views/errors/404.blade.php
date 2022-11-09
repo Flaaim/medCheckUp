@@ -8,8 +8,9 @@
                 <div class="d-flex flex-column align-items-center mt-5">
                     <h1>Страница на найдена</h1>
                         <p>
-                            Вернитесь на <a href="{{route('home')}}">главную</a>
+                            Вернуться на <a href="{{route('home')}}">главную</a>
                         </p>
+                        <img src="{{url('/images/cat.png')}}" alt="Images cat">
                 </div>
                 
             </div>

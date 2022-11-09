@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -47,18 +48,19 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->renderable(function(Exception $e, $request){
+        $this->renderable(function(Exception $e, $request){ 
             return $this->handleException($request, $e);
         });
         
     }
 
     public function handleException($request, $e){
+        
         switch(true){
             case $e instanceof MethodNotAllowedHttpException:
                 return redirect()->route('home');
             case $e instanceof NotFoundHttpException:
-                return response()->view('errors.404', [], 404);
+                return redirect()->route('fallback');
         }
         return null;
     }
