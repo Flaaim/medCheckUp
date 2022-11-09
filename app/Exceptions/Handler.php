@@ -57,6 +57,8 @@ class Handler extends ExceptionHandler
         switch(true){
             case $e instanceof MethodNotAllowedHttpException:
                 return redirect()->route('home');
+            case $e instanceof NotFoundHttpException:
+                return response()->view('errors.404', [], 404);
         }
         return null;
     }
