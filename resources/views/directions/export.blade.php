@@ -1,6 +1,12 @@
 <div class="card">
     <div class="card-header">
-        Экспорт данных
+        <div class="d-flex justify-content-between">
+            <span>
+                Экспорт данных
+            </span>
+            <a href="{{route('home')}}">Назад</a>
+        </div>
+        
     </div>
     <div class="card-body">
         <form action="{{route('direction.export', $company)}}" method="POST">

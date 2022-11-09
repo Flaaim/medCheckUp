@@ -36,7 +36,7 @@
                 
 
                 <thead>
-                    <th>Номер<button id="id" class="btn btn-link sort active" value="desc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    <th>Номер<button id="number" class="btn btn-link sort active" value="desc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th >
                         <div class="d-flex">
@@ -89,7 +89,7 @@ $.ajaxSetup({
     const options = {}
 
     function search(options){
-        let field = options.field || 'id';
+        let field = options.field || 'number';
         let sort = options.sort || 'desc';
         let page = options.page || 1;
         let limit = options.limit || 10;

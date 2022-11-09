@@ -20,8 +20,8 @@
                     <div class="card-body">
                         <h5 class="card-title"> <strong>1. Регистрация</strong> </h5>
                             <ul>
-                                <li>Регистрируемся на сайте</li>
-                                <li>Регистрируем на сайте компанию</li>  
+                                <li>Регистрируемся <a href="{{route('register')}}">на сайте</a></li>
+                                <li>Регистрируем компанию</li>  
                             </ul> 
                     </div>
                 </div>
@@ -41,6 +41,11 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="d-flex flex-column align-items-center mt-5">
+                <p>
+                    Есть аккаунт? Воспользуйтесь <a href="{{route('login')}}">формой входа</a>
+                </p>
             </div>
         </div>
     </div>

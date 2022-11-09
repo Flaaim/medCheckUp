@@ -76,4 +76,11 @@ class DirectionService
 
         return $firstLast;
     }
+
+
+
+    public function getLastNumber($company){
+        return Direction::where('company_id', $company->id)->max('number');
+       
+    }
 }

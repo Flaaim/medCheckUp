@@ -8,4 +8,6 @@ return [
     'company' => 'Компания',
     'new_company' => 'Добавить компанию',
     'change_company' => 'Сменить компанию', 
+    'change_data_company' => 'Изменить данные',
+    'delete_company' => 'Удалить'
 ];
