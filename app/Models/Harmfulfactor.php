@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Harmfulfactor extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'profession',
+        'harmfulfactor',
+        'company_id',
+    ];
 }

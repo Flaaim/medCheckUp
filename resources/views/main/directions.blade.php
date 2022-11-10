@@ -143,7 +143,7 @@ $.ajaxSetup({
             if(res.directions.length <= 0){
                 htmlView += `
                     <tr>
-                        <td colspan="6">Направления не найдены!</td>
+                        <td colspan="9">Направления не найдены!</td>
                     </tr>`;
             }
            console.log(res)

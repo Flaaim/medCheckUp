@@ -23,7 +23,7 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+    
 
 
     Route::group(['prefix' => 'companies'], function(){
@@ -54,6 +54,10 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
         
             Route::post('/loadfactors', [App\Http\Controllers\DirectionController::class, 'loadfactors'])->name('direction.loadfactors');
         });
+
+        Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+        Route::post('/settings', [App\Http\Controllers\SettingController::class, 'import'])->name('import');
+        Route::delete('/settings/delete/{company}', [App\Http\Controllers\SettingController::class, 'deleteAll'])->name('factors.delete.all');
     });
 
 
