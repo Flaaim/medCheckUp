@@ -14,18 +14,10 @@
        @if(count($harmfulFactors) > 0)
         <p>Факторы успешно загружены</p>
             <table class="table">
-                <th>
-                    №
-                </th>
-                <th>
-                    Профессия/Должность
-                </th>
-                <th>
-                    Вредный фактор/Вид деятельности
-                </th>
-                <th>
-                    Изменить
-                </th>
+                <th>№</th>
+                <th>Профессия/Должность</th>
+                <th>Вредный фактор/Вид деятельности</th>
+                <th>Изменить</th>
                     @foreach($harmfulFactors as $factor)
                         <tr>
                             <td>{{$factor->id}}</td>
@@ -47,8 +39,8 @@
             @csrf
 
             <div class="form-group my-3">
-                <label for="uploadExcel"  class="form-label">Загрузить excel файл</label>
-                <input type="file" name="harmfulFactors" class="form-control" id="uploadExcel">
+                <label for="uploadExcel" class="form-label">Загрузить excel файл</label>
+                <input type="file" name="harmfulFactors" class="form-control " id="uploadExcel" required>
             </div>
             <button type="submit" class="btn btn-primary">Загрузить</button>
         </form>
