@@ -8,7 +8,7 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-
+use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
 
 class Handler extends ExceptionHandler
 {
@@ -61,6 +61,8 @@ class Handler extends ExceptionHandler
                 return redirect()->route('home');
             case $e instanceof NotFoundHttpException:
                 return redirect()->route('fallback');
+            case $e instanceof NoTypeDetectedException:
+                return redirect()->back()->with('error', 'Неверный формат файла');
         }
         return null;
     }
