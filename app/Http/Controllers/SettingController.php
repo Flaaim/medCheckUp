@@ -27,12 +27,12 @@ class SettingController extends BaseController
             $request->validate([
                 'harmfulFactors' => 'required|file',
             ]);
-        
-           Excel::import(new HarmfulfactorsImport($request->company), $request->file('harmfulFactors'));
-           //return redirect('/home')->with('success', 'Файл успешно добавлен');
+            $company = Company::where('user_id', $request->user()->id)->where('status', '1')->first();  
+            Excel::import(new HarmfulfactorsImport($company->id), $request->file('harmfulFactors'));
+            return redirect()->back()->with('success', 'Файл успешно добавлен');
     }
     public function deleteAll(Company $company){
         Harmfulfactor::where('company_id', $company->id)->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Файл успешно удален');
     }
 }

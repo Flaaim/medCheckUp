@@ -20,14 +20,15 @@ class HarmfulfactorsImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-        $harmfulFactor = Harmfulfactor::where('company_id', $this->company)->get();
-        dump($this->company);
-        foreach($rows as $row){
 
-                $harmfulFactor->profession = $row['profession'];
-                $harmfulFactor->harmfulfactor = $row['harmfulfactor'];
-                $harmfulFactor->company_id = $this->company;
-                
+        foreach($rows as $row){
+            Harmfulfactor::create([
+                'profession' => $row['profession'],
+                'harmfulfactor' => $row['harmfulfactor'],
+                'company_id' => $this->company,
+            ]);
+
+              
         } 
         
     }

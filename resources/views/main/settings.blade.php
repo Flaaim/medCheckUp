@@ -23,11 +23,15 @@
                 <th>
                     Вредный фактор/Вид деятельности
                 </th>
+                <th>
+                    Изменить
+                </th>
                     @foreach($harmfulFactors as $factor)
                         <tr>
                             <td>{{$factor->id}}</td>
                             <td>{{$factor->profession}}</td>
                             <td>{{$factor->harmfulfactor}}</td>
+                            <td>Изменить</td>
                         </tr>
                     @endforeach
                 <tr></tr>
