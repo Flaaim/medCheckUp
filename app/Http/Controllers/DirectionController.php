@@ -15,6 +15,7 @@ use DB;
 use App\Exports\DirectionsExport;
 use Excel;
 use App\Models\Psychofactor;
+use App\Models\Harmfulfactor;
 
 class DirectionController extends BaseController
 {
@@ -29,9 +30,12 @@ class DirectionController extends BaseController
 
     public function create(){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+        
         $psychofactors = DB::table('psychofactors')->get();
         $currentNumber = $this->service->getLastNumber($company) + 1;
-        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber]);
+        $harmfulFactors = HarmfulFactor::where('company_id', $company->id)->get();
+        
+        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
 
@@ -105,6 +109,16 @@ class DirectionController extends BaseController
             ], 200);
         }
     }
+
+    public function loadHarmfulFactors(Request $request){
+        if($request->ajax()){
+            $harmFulfactor = Harmfulfactor::where('id', $request->id)->first();
+            return response()->json([
+                'harmFulfactor' => $harmFulfactor
+            ]);
+        }
+    }
+
     public function showExport(Company $company){
         
         $this->content = view('directions.export', ['company' => $company])->render();

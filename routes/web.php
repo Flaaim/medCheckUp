@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::post('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
         
             Route::post('/loadfactors', [App\Http\Controllers\DirectionController::class, 'loadfactors'])->name('direction.loadfactors');
+            Route::post('/loadHarmfulFactors', [App\Http\Controllers\DirectionController::class, 'loadHarmfulFactors'])->name('direction.loadHarmfulFactors');
         });
 
         Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');

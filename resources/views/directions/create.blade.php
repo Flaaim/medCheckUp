@@ -86,6 +86,16 @@
                                 @enderror
                             </div>
                             <p></p>
+                            @if(count($harmfulFactors) > 0)
+                                <div class="form-group">
+                                    <label for="profession">{{__('direction.profession')}}</label>
+                                    <select name="profession" class="form-control" id="profession">
+                                        @foreach($harmfulFactors as $factor)
+                                            <option value="{{$factor->id}}">{{$factor->profession}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
                             <div class="form-group">
                                 <label for="profession">{{__('direction.profession')}}</label>
                                 <input type="text" class="form-control @error('profession') is-invalid @enderror" id="profession" name="profession" value="{{old('profession')}}">
@@ -94,7 +104,9 @@
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                            </div>
+                            </div>    
+                            @endif
+
                             <p></p>
                             <div class="form-group">
                                 <label for="factors">{{__('direction.factors')}}</label>
@@ -142,8 +154,27 @@
                         </form>
                     </div>
                 </div>
-
-    
+<script>
+    $('#profession').change(function(){
+        let id = $('#profession option:selected').val()
+        
+        $.ajax({
+            url: '{{route('direction.loadHarmfulFactors')}}',
+            method: "POST",
+            data:{id:id},
+            dataType: "json",
+            success: function(data){
+                console.log(data)
+                loadHarmfulFactors(data)
+            }
+        })
+    })
+    function loadHarmfulFactors(data){
+        //console.log(
+       // $('#factors').val()
+        $('#factors').val(data.harmFulfactor.harmfulfactor)
+    }
+</script>
 
     
     
