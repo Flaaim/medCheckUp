@@ -90,8 +90,9 @@
                                 <div class="form-group">
                                     <label for="profession">{{__('direction.profession')}}</label>
                                     <select name="profession" class="form-control" id="profession">
+                                        <option value="" selected disabled hidden>Выберите профессию</option>
                                         @foreach($harmfulFactors as $factor)
-                                            <option value="{{$factor->id}}">{{$factor->profession}}</option>
+                                            <option value="{{$factor->profession}}">{{$factor->profession}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -156,22 +157,19 @@
                 </div>
 <script>
     $('#profession').change(function(){
-        let id = $('#profession option:selected').val()
-        
+        let profession = $('#profession option:selected').val()
+       
         $.ajax({
             url: '{{route('direction.loadHarmfulFactors')}}',
             method: "POST",
-            data:{id:id},
+            data:{profession:profession},
             dataType: "json",
             success: function(data){
-                console.log(data)
                 loadHarmfulFactors(data)
             }
         })
     })
     function loadHarmfulFactors(data){
-        //console.log(
-       // $('#factors').val()
         $('#factors').val(data.harmFulfactor.harmfulfactor)
     }
 </script>

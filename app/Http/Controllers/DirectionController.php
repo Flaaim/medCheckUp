@@ -112,7 +112,7 @@ class DirectionController extends BaseController
 
     public function loadHarmfulFactors(Request $request){
         if($request->ajax()){
-            $harmFulfactor = Harmfulfactor::where('id', $request->id)->first();
+            $harmFulfactor = Harmfulfactor::where('profession', $request->profession)->first();
             return response()->json([
                 'harmFulfactor' => $harmFulfactor
             ]);
