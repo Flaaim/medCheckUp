@@ -38,7 +38,6 @@ class DirectionController extends BaseController
         $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
-
     public function store(DirectionRequest $request){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         $this->service->save($request, new Direction(), $company);
