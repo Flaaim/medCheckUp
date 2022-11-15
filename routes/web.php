@@ -23,7 +23,7 @@ Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+    
 
 
     Route::group(['prefix' => 'companies'], function(){
@@ -47,10 +47,18 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::post('/search', [App\Http\Controllers\DirectionController::class, 'showDirections'])->name('directions.search');
             
             Route::get('/download/{direction}', [App\Http\Controllers\DirectionController::class, 'downloadDirection'])->name('direction.download');
-            Route::get('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
 
+            Route::get('/export/{company}', [App\Http\Controllers\DirectionController::class, 'showExport'])->name('direction.show_export');
+
+            Route::post('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
+        
             Route::post('/loadfactors', [App\Http\Controllers\DirectionController::class, 'loadfactors'])->name('direction.loadfactors');
+            Route::post('/loadHarmfulFactors', [App\Http\Controllers\DirectionController::class, 'loadHarmfulFactors'])->name('direction.loadHarmfulFactors');
         });
+
+        Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+        Route::post('/settings', [App\Http\Controllers\SettingController::class, 'import'])->name('import');
+        Route::delete('/settings/delete/{company}', [App\Http\Controllers\SettingController::class, 'deleteAll'])->name('factors.delete.all');
     });
 
 

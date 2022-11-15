@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Direction;
+use App\Models\HarmfulFactor;
 
 class Company extends Model
 {
@@ -28,5 +30,9 @@ class Company extends Model
 
     public function directions(){
         return $this->hasMany(Direction::class);
+    }
+
+    public function harmfulfactors(){
+        return $this->hasMany(Harmfulfactor::class);
     }
 }

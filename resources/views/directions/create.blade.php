@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col">
                                 <label for="number">{{__('direction.number')}}</label>
-                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{old('number')}}">
+                                    <input type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{$currentNumber}}">
                                     @error('number')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -86,6 +86,17 @@
                                 @enderror
                             </div>
                             <p></p>
+                            @if(count($harmfulFactors) > 0)
+                                <div class="form-group">
+                                    <label for="profession">{{__('direction.profession')}}</label>
+                                    <select name="profession" class="form-control" id="profession">
+                                        <option value="" selected disabled hidden>Выберите профессию</option>
+                                        @foreach($harmfulFactors as $factor)
+                                            <option value="{{$factor->profession}}">{{$factor->profession}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
                             <div class="form-group">
                                 <label for="profession">{{__('direction.profession')}}</label>
                                 <input type="text" class="form-control @error('profession') is-invalid @enderror" id="profession" name="profession" value="{{old('profession')}}">
@@ -94,7 +105,9 @@
                                         <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                            </div>
+                            </div>    
+                            @endif
+
                             <p></p>
                             <div class="form-group">
                                 <label for="factors">{{__('direction.factors')}}</label>
@@ -142,8 +155,24 @@
                         </form>
                     </div>
                 </div>
-
-    
+<script>
+    $('#profession').change(function(){
+        let profession = $('#profession option:selected').val()
+       
+        $.ajax({
+            url: '{{route('direction.loadHarmfulFactors')}}',
+            method: "POST",
+            data:{profession:profession},
+            dataType: "json",
+            success: function(data){
+                loadHarmfulFactors(data)
+            }
+        })
+    })
+    function loadHarmfulFactors(data){
+        $('#factors').val(data.harmFulfactor.harmfulfactor)
+    }
+</script>
 
     
     

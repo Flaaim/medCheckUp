@@ -8,3 +8,18 @@ html, body {
  .footer {
     flex-shrink: 0!important;
   }
+
+.welcome-page {
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 0.69em;
+  margin-top: 0;
+  font-weight: 600;
+}
+.h1 {
+  font-size: 3rem;
+}
+
+.h2 {
+  font-size: 1.5rem;
+}
+

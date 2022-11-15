@@ -14,19 +14,16 @@
     <div class="card-body">
         @if($company)
         <div class="table-responsive">
-        <table class="table">
-
-                
+        <table class="table table-striped">
                     <div class="form-group row">
-
                         <div class="col-sm-4">
                         <label for="limit" >
                                 Кол-во записей на странице:
                             </label>
                         <select name="limit" id="limit" class="form-control ">
-                            <option value='5'>5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
+                            <option value='10'>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
                         </select>
                         </div>
                             
@@ -39,35 +36,33 @@
                 
 
                 <thead>
-                    <th>Номер<button id="id" class="btn btn-link sort active" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    <th>Номер<button id="number" class="btn btn-link sort active" value="desc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th >
                         <div class="d-flex">
                         <span>
                             Дата выдачи
                         </span>          
-                        <button id="date" class="btn btn-link sort" value="asc"><i id="sort-data-caret" class="bi bi-caret-up"></i></button>                            
+                        <button id="date" class="btn btn-link sort" value="desc"><i id="sort-data-caret" class="bi bi-caret-up"></i></button>                            
                         </div>  
                     </th>
                     <th>Вид направления</th>
                     <th>ФИО
-                    <button id="fullname" class="btn btn-link sort" value="asc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
+                    <button id="fullname" class="btn btn-link sort" value="desc"><i id="sort-number-caret" class="bi bi-caret-up"></i></button>
                     </th>
                     <th>Должность</th>
                     <th>Псих. осв.</th>
-                    <th>Действия</th>
+                    <th colspan="3">Действия</th>
                 </thead>
                 <tbody class="directions">   
                 </tbody>
                 
             </table>
         </div>   
-            <div class="d-flex justify-content-start mt-3">
-                <div class="d-flex show-records rows mx-3">
-                    
+            <div class="d-flex justify-content-between mt-3">
+                <div class="d-flex align-self-center show-records rows mx-3">
                 </div>
                 <div class="d-flex pagination mx-3">
-
                 </div>
             </div>
             
@@ -79,7 +74,7 @@
     <div class="card-footer">
         <div class="d-flex justify-content-end">
             @if($company)
-            <span><a href="{{route('direction.export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
+            <span><a href="{{route('direction.show_export', $company)}}">{{__('dashboard.export_direction')}}</a></span>
             @endif
         </div>
     </div>
@@ -94,10 +89,10 @@ $.ajaxSetup({
     const options = {}
 
     function search(options){
-        let field = options.field || 'id';
-        let sort = options.sort || 'asc';
+        let field = options.field || 'number';
+        let sort = options.sort || 'desc';
         let page = options.page || 1;
-        let limit = options.limit || 5;
+        let limit = options.limit || 10;
         let keyword = $('#search').val();
             $.ajax({
                 url: "{{route('directions.search')}}",
@@ -148,7 +143,7 @@ $.ajaxSetup({
             if(res.directions.length <= 0){
                 htmlView += `
                     <tr>
-                        <td colspan="6">Направления не найдены!</td>
+                        <td colspan="9">Направления не найдены!</td>
                     </tr>`;
             }
            console.log(res)
@@ -156,7 +151,7 @@ $.ajaxSetup({
             for(let i = 0; i < res.directions.length; i++){
                 htmlView += `
                     <tr>
-                        <td>`+ res.directions[i].id +`</td>
+                        <td>`+ res.directions[i].number +`</td>
                         <td>`+ res.directions[i].date +`</td>
                         <td>`+ res.directions[i].typeOfDirection +`</td>
                         <td>`+ res.directions[i].fullname +`</td>
@@ -189,9 +184,10 @@ $.ajaxSetup({
                             }
                             
                         }
-
             htmlPaginateView += `</div>`
-            
+            htmlRecordsView += `<div>
+                        Показаны результаты с `+res.firstLast['first']+` по `+res.firstLast['last']+` Всего: `+res.firstLast['all']+` 
+                        </div>`
             $('.directions').html(htmlView);
             $('.pagination').html(htmlPaginateView);
             $('.show-records').html(htmlRecordsView);

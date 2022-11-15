@@ -36,13 +36,13 @@
             <table class="table">
                 <tr>
                     <td>
-                    <a href="{{route('company.edit', $company)}}">Изменить данные</a> 
+                    <a href="{{route('company.edit', $company)}}">{{__('dashboard.change_data_company')}}</a> 
                     </td>
                     <td>
                     <form action="{{route('company.destroy', $company)}}" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="submit" class="btn btn-link">Удалить компанию</button>
+                        <button type="submit" class="btn btn-link">{{__('dashboard.delete_company')}}</button>
                     </form>
                     </td>
                 </tr>

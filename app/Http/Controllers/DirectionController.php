@@ -15,6 +15,7 @@ use DB;
 use App\Exports\DirectionsExport;
 use Excel;
 use App\Models\Psychofactor;
+use App\Models\Harmfulfactor;
 
 class DirectionController extends BaseController
 {
@@ -29,8 +30,12 @@ class DirectionController extends BaseController
 
     public function create(){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+        
         $psychofactors = DB::table('psychofactors')->get();
-        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors]);
+        $currentNumber = $this->service->getLastNumber($company) + 1;
+        $harmfulFactors = HarmfulFactor::where('company_id', $company->id)->get();
+        
+        $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
 
@@ -76,17 +81,21 @@ class DirectionController extends BaseController
 
     public function showDirections(Request $request){
             if($request->ajax()){
-                $offSet = $this->service->getOffSet($request->page, $request->limit);
+                $limit = $request->limit;
+                $page = $request->page;
+                $offSet = $this->service->getOffSet($page, $limit);
                 $company = $this->service->getCompany($this->user);
                 $directions = $this->service->getDirections($request, $company, $offSet);
-                $countPages = $this->service->getCountPages($request, $company);
-                
-                $pageNumber = ($offSet / $request->limit ) + 1;
+                $countPages = $this->service->getCountPages($request, $company, $limit);
+                $pageNumber = $this->service->getPageNumber($offSet, $limit);
+                $countRows = $this->service->getRows($request, $limit, $pageNumber, $company);
+
+            
                 return response()->json([
                     'directions' => $directions,
                     'countpages' => $countPages,
-                    'pagenumber' => $pageNumber,
                     'limit' => (int) $request->limit,
+                    'firstLast' => $countRows,
                 ]);
             }
     }
@@ -101,10 +110,26 @@ class DirectionController extends BaseController
         }
     }
 
-    public function export(Company $company){
+    public function loadHarmfulFactors(Request $request){
+        if($request->ajax()){
+            $harmFulfactor = Harmfulfactor::where('profession', $request->profession)->first();
+            return response()->json([
+                'harmFulfactor' => $harmFulfactor
+            ]);
+        }
+    }
+
+    public function showExport(Company $company){
         
-        $export = new DirectionsExport($company);
-        return Excel::download($export, 'Directions.xlsx');
+        $this->content = view('directions.export', ['company' => $company])->render();
+        return $this->renderOutput();
+
+    }
+
+    public function export(Request $request, Company $company){
+        $export = new DirectionsExport($company, $request);
+       
+        return Excel::download($export, 'export.xlsx');
         
     }
 }
