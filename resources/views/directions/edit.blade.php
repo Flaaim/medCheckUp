@@ -115,7 +115,7 @@
                             </div>
                             @endif
                             <p></p>
-                            <button class="btn btn-primary" type="submit">{{__('direction.change')}}</button>
+                            <button class="btn btn-primary" type="submit" onclick="preventSubmit(this)">{{__('direction.change')}}</button>
                             <a href="#" class="btn btn-primary disabled">Предварительный просмотр</a>
                             </form>
                         </div>
