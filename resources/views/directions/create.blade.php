@@ -150,11 +150,12 @@
 
                             </div>
                             <p></p>
-                            <button class="btn btn-primary" type="submit">{{__('direction.create')}}</button>
-                            <a href="#" class="btn btn-primary disabled">Предварительный просмотр</a>
+                            <button class="btn btn-primary" type="submit" onclick="preventSubmit(this)">{{__('direction.create')}}</button>
+                            <button  href="#" class="btn btn-primary disabled" >Предварительный просмотр</button >
                         </form>
                     </div>
                 </div>
+
 <script>
     $('#profession').change(function(){
         let profession = $('#profession option:selected').val()
