@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
         Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
         Route::post('/settings', [App\Http\Controllers\SettingController::class, 'import'])->name('import');
         Route::delete('/settings/delete/{company}', [App\Http\Controllers\SettingController::class, 'deleteAll'])->name('factors.delete.all');
+        Route::post('/harmful', [App\Http\Controllers\SettingController::class, 'save'])->name('harmful.save');
     });
 
 

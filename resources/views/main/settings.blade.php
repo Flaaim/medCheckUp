@@ -14,16 +14,22 @@
        @if(count($harmfulFactors) > 0)
         <p>Факторы успешно загружены</p>
             <table class="table">
-                <th>№</th>
                 <th>Профессия/Должность</th>
                 <th>Вредный фактор/Вид деятельности</th>
-                <th>Изменить</th>
+                <th>Действия</th>
+                
                     @foreach($harmfulFactors as $factor)
                         <tr>
-                            <td>{{$factor->id}}</td>
-                            <td>{{$factor->profession}}</td>
-                            <td>{{$factor->harmfulfactor}}</td>
-                            <td>Изменить</td>
+                            <input type="hidden" class="form-control {{$factor->id}}" value="{{$factor->id}}">
+                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->profession}}" disabled>
+                            </td>
+                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->harmfulfactor}}" disabled>
+                                </td>
+                            <td>
+                                <button id="{{$factor->id}}" class="btn btn-link save" disabled>Сохранить</button>
+                                <button id="{{$factor->id}}" class="btn btn-link changeFactor">Изменить</button>
+                            </td>
+                            
                         </tr>
                     @endforeach
                 <tr></tr>
@@ -47,3 +53,31 @@
         @endif
     </div>
 </div>
+<script>
+    $('.changeFactor').click(function(){
+        let id = $(this).prop('id');
+        $('.'+id).prop('disabled', false);
+        $('#'+id).prop('disabled', false);
+    })
+    $('.save').click(function(){
+        let id = $(this).prop('id')
+        const arr = [];
+        $('.'+id).each(function(){
+            arr.push($(this).val());
+        })
+        console.log(arr)
+        $.ajax({
+            url: "{{route('harmful.save')}}",
+            method: "POST",
+            data: {arr:arr},
+            dataType: "json",
+            success: function(data){
+                console.log(data)
+                $('.'+data.ajax.id).prop('disabled', true);
+                $('#'+data.ajax.id).prop('disabled', true);
+            }
+        })
+    })
+
+
+</script>

@@ -35,4 +35,16 @@ class SettingController extends BaseController
         Harmfulfactor::where('company_id', $company->id)->delete();
         return redirect()->back()->with('success', 'Файл успешно удален');
     }
+
+
+    public function save(Request $request){
+        if($request->ajax()){
+            $f = Harmfulfactor::where('id', $request->arr['0'])->first();
+            $f->profession = $request->arr['1'];
+            $f->save();
+            return response()->json([
+                'ajax' => $f
+            ]);
+        }
+    }
 }
