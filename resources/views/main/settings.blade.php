@@ -7,77 +7,9 @@
     
     </div>
     <div class="card-body">
-        <h5>Импорт таблицы с факторами</h5>
+        <h5>Импорт таблицы с профессиями/факторами</h5>
         <p>
-            Вы можете загрузить excel файл с вредными производственными факторами, устрановленными для профессий ваших работников, чтобы в дальнейшем при создании направления не указывать их вручную.
+            Вы можете загрузить excel файл с профессиями и пунктами вредных производственными факторов, которые им соответствуют, чтобы в дальнейшем при создании направления не указывать их вручную.
         </p>
-       @if(count($harmfulFactors) > 0)
-        <p>Факторы успешно загружены</p>
-            <table class="table">
-                <th>Профессия/Должность</th>
-                <th>Вредный фактор/Вид деятельности</th>
-                <th>Действия</th>
-                
-                    @foreach($harmfulFactors as $factor)
-                        <tr>
-                            <input type="hidden" class="form-control {{$factor->id}}" value="{{$factor->id}}">
-                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->profession}}" disabled>
-                            </td>
-                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->harmfulfactor}}" disabled>
-                                </td>
-                            <td>
-                                <button id="{{$factor->id}}" class="btn btn-link save" disabled>Сохранить</button>
-                                <button id="{{$factor->id}}" class="btn btn-link changeFactor">Изменить</button>
-                            </td>
-                            
-                        </tr>
-                    @endforeach
-                <tr></tr>
-            </table>
-            <form action="{{route('factors.delete.all', $company)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-primary">Удалить все факторы</button>
-            </form>
-            
-       @else
-        <form action="{{route('import')}}" method="POST" enctype="multipart/form-data">
-            @csrf
+            <a href="{{route('harmfulfactors.index')}}">Настроить импорт</a>
 
-            <div class="form-group my-3">
-                <label for="uploadExcel" class="form-label">Загрузить excel файл</label>
-                <input type="file" name="harmfulFactors" class="form-control " id="uploadExcel" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Загрузить</button>
-        </form>
-        @endif
-    </div>
-</div>
-<script>
-    $('.changeFactor').click(function(){
-        let id = $(this).prop('id');
-        $('.'+id).prop('disabled', false);
-        $('#'+id).prop('disabled', false);
-    })
-    $('.save').click(function(){
-        let id = $(this).prop('id')
-        const arr = [];
-        $('.'+id).each(function(){
-            arr.push($(this).val());
-        })
-        console.log(arr)
-        $.ajax({
-            url: "{{route('harmful.save')}}",
-            method: "POST",
-            data: {arr:arr},
-            dataType: "json",
-            success: function(data){
-                console.log(data)
-                $('.'+data.ajax.id).prop('disabled', true);
-                $('#'+data.ajax.id).prop('disabled', true);
-            }
-        })
-    })
-
-
-</script>

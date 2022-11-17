@@ -56,10 +56,23 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::post('/loadHarmfulFactors', [App\Http\Controllers\DirectionController::class, 'loadHarmfulFactors'])->name('direction.loadHarmfulFactors');
         });
 
-        Route::get('/settings', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
-        Route::post('/settings', [App\Http\Controllers\SettingController::class, 'import'])->name('import');
-        Route::delete('/settings/delete/{company}', [App\Http\Controllers\SettingController::class, 'deleteAll'])->name('factors.delete.all');
-        Route::post('/harmful', [App\Http\Controllers\SettingController::class, 'save'])->name('harmful.save');
+        /* 
+            SETTINGS
+        */
+        Route::group(['prefix' => 'settings'], function(){
+            Route::get('/', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+
+
+
+            Route::group(['prefix' => 'harmful'], function(){
+                Route::get('/', [App\Http\Controllers\HarmfulController::class, 'index'])->name('harmfulfactors.index');
+                Route::post('/', [App\Http\Controllers\HarmfulController::class, 'import'])->name('harmfulfactors.import');
+                Route::delete('/{company}', [App\Http\Controllers\HarmfulController::class, 'deleteAll'])->name('harmfulfactors.delete.all');
+                Route::post('/harmful', [App\Http\Controllers\HarmfulController::class, 'save'])->name('harmful.save');
+            });
+        });
+        
+        
     });
 
 
