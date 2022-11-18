@@ -35,6 +35,7 @@ class HarmfulController extends BaseController
         Excel::import(new HarmfulfactorsImport($company->id), $request->file('harmfulFactors'));
         return redirect()->back()->with('success', 'Файл успешно добавлен');
     }
+
     public function deleteAll(Company $company){
         Harmfulfactor::where('company_id', $company->id)->delete();
         return redirect()->back()->with('success', 'Файл успешно удален');
@@ -50,5 +51,8 @@ class HarmfulController extends BaseController
             ]);
         }
     }
-
+    public function destroy(Harmfulfactor $factor){
+        $factor->delete();
+        return redirect()->back()->with('success', 'Запись успшено удалена');
+    }
 }

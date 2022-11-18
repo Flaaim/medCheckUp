@@ -20,13 +20,18 @@
                     @foreach($harmfulFactors as $factor)
                         <tr>
                             <input type="hidden" class="form-control {{$factor->id}}" value="{{$factor->id}}">
-                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->profession}}" disabled>
+                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->profession}}" disabled required>
                             </td>
-                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->harmfulfactor}}" disabled>
+                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->harmfulfactor}}" disabled required>
                                 </td>
                             <td>
                                 <button id="{{$factor->id}}" class="btn btn-link save" disabled>Сохранить</button>
                                 <button id="{{$factor->id}}" class="btn btn-link changeFactor">Изменить</button>
+                                <form action="{{route('harmful.destroy', $factor)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-link">Удалить</button>
+                                </form>
                             </td>
                             
                         </tr>
@@ -40,7 +45,7 @@
             </form>
             
        @else
-        <form action="{{route('import')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('harmfulfactors.import')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group my-3">

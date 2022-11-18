@@ -66,9 +66,14 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
 
             Route::group(['prefix' => 'harmful'], function(){
                 Route::get('/', [App\Http\Controllers\HarmfulController::class, 'index'])->name('harmfulfactors.index');
-                Route::post('/', [App\Http\Controllers\HarmfulController::class, 'import'])->name('harmfulfactors.import');
-                Route::delete('/{company}', [App\Http\Controllers\HarmfulController::class, 'deleteAll'])->name('harmfulfactors.delete.all');
+                Route::delete('/{factor}', [App\Http\Controllers\HarmfulController::class, 'destroy'])->name('harmful.destroy');
                 Route::post('/harmful', [App\Http\Controllers\HarmfulController::class, 'save'])->name('harmful.save');
+
+               Route::group(['prefix' => 'action'], function(){
+                Route::post('/import', [App\Http\Controllers\HarmfulController::class, 'import'])->name('harmfulfactors.import');
+                Route::delete('/delete/{company}', [App\Http\Controllers\HarmfulController::class, 'deleteAll'])->name('harmfulfactors.delete.all');
+               });
+
             });
         });
         
