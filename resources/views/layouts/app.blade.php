@@ -82,7 +82,11 @@
         </nav>
 
         <main class="content py-4">
-            @yield('content')
+                <div class="container">
+                    @section('breadcrumbs', Breadcrumbs::render())
+                    @yield('breadcrumbs')
+                    @yield('content')
+                </div>
         </main>
 
     </div>

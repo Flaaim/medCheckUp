@@ -89,12 +89,17 @@
                             @if(count($harmfulFactors) > 0)
                                 <div class="form-group">
                                     <label for="profession">{{__('direction.profession')}}</label>
-                                    <select name="profession" class="form-control" id="profession">
+                                    <select name="profession" class="form-control @error('profession') is-invalid @enderror" id="profession">
                                         <option value="" selected disabled hidden>Выберите профессию</option>
                                         @foreach($harmfulFactors as $factor)
-                                            <option value="{{$factor->profession}}">{{$factor->profession}}</option>
+                                            <option  value="{{$factor->profession}}" {{old('profession') == $factor->profession ? 'selected' : ''}}>{{$factor->profession}}</option>
                                         @endforeach
                                     </select>
+                                    @error('profession')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             @else
                             <div class="form-group">

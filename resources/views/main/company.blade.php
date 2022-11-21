@@ -1,4 +1,4 @@
-
+@section('breadcrumbs', ' ')
 <div class="card">
     <div class="card-header">
         <div class="d-flex justify-content-between">

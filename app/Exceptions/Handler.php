@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
 
     public function handleException($request, $e){
         
-        switch(true){
+        switch(true){          
             case $e instanceof MethodNotAllowedHttpException:
                 return redirect()->route('home');
             case $e instanceof NotFoundHttpException:
