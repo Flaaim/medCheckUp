@@ -27,8 +27,11 @@ class HomeController extends BaseController
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function welcome(){
-        $this->content = view('welcome');
-        return $this->renderOutput();
+        if(!$this->user) {
+            $this->content = view('welcome')->render();
+            return $this->renderOutput();
+        } 
+        return redirect()->route('home'); 
     }
 
 

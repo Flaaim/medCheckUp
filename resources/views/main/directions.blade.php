@@ -107,7 +107,7 @@ $.ajaxSetup({
                 dataType: "json",
                 success: function(data){
                 table_post_row(data)
-                console.log(data)
+                
                 }, error(data){
                 console.log('error!')
                 }
@@ -146,7 +146,7 @@ $.ajaxSetup({
                         <td colspan="9">Направления не найдены!</td>
                     </tr>`;
             }
-           console.log(res)
+           
 
             for(let i = 0; i < res.directions.length; i++){
                 htmlView += `

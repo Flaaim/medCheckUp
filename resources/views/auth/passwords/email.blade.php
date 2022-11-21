@@ -8,7 +8,7 @@
                 <div class="card-header">      
                     <div class="d-flex justify-content-between">
                         <span>
-                            {{ __('auth.reset_password_header') }}
+                            {{ __('auth.request_password_header') }}
                         </span>
                         <span>
                             <a href="{{route('home')}}">Назад</a>

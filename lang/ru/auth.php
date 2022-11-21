@@ -22,6 +22,7 @@ return [
     'forgot_password' => 'Забыли пароль?',
 
     //Reset password
+    'request_password_header' => 'Восстановление пароля',
     'reset_password_header' => 'Изменение пароля',
     'new_password' => 'Новый пароль',
     'send_password_link' => 'Восстановить',
