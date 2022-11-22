@@ -73,7 +73,7 @@ class DirectionController extends BaseController
         $template->saveAs($pathToSave);
         
         if(Storage::disk('local')->exists($direction->filename.'.docx')){
-            return response()->download(storage_path().'\\app\\'.$direction->filename.'.docx')->deleteFileAfterSend(true);;
+            return response()->download(storage_path().'\\app\\'.$direction->filename.'.docx')->deleteFileAfterSend(true);
         }
 
     }

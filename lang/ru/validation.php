@@ -10,10 +10,22 @@ return [
     'min' => [
         'string' => 'Поле :attribute должно быть как минимум :min символов.',
     ],
+
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'harmfulFactors' => [
+            'required' => 'Необходимо загрузить файл'
+        ],
+        '*.profession' => [
+            'required' => 'В загружаемой таблице одно или несколько ячеек не заполнены.',
+            'distinct' => 'В загружаемой таблице одинаковые значения',
+        ],
+        '*.harmfulfactor' => [
+            'required' => 'В загружаемой таблице одно или несколько ячеек не заполнены.'
+        ]
+
     ],
 
     'attributes' => [
@@ -29,6 +41,7 @@ return [
         'birthdate' => 'дата рождения',
         'department' => 'структурное подразделение',
         'factors' => 'факторы',
-        'number' => 'номер направления'
+        'number' => 'номер направления',
+        'harmfulFactors' => 'файл',
     ],
 ];
