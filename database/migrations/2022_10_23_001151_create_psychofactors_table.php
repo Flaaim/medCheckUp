@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('psychofactors', function (Blueprint $table) {
             $table->id();
+            $table->string('alias');
             $table->string('title');
             $table->timestamps();
         });

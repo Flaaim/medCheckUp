@@ -7,8 +7,9 @@ use App\Http\Controllers\BaseController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\HarmfulfactorsImport;
 use App\Models\Company;
-use App\Models\HarmfulFactor;
+use App\Models\Harmfulfactor;
 use App\Http\Services\SettingService;
+use Illuminate\Validation\Rules\File;
 
 class HarmfulController extends BaseController
 {
@@ -29,10 +30,11 @@ class HarmfulController extends BaseController
 
     public function import(Request $request){
         $request->validate([
-            'harmfulFactors' => 'required|file',
+            'harmfulFactors' => 'required|file|mimes:xlsx,xls',
         ]);
-        $company = Company::where('user_id', $request->user()->id)->where('status', '1')->first();  
-        Excel::import(new HarmfulfactorsImport($company->id), $request->file('harmfulFactors'));
+        $company = Company::where('user_id', $request->user()->id)->where('status', '1')->first(); 
+        $import = new HarmfulfactorsImport($company->id); 
+        Excel::import($import, $request->file('harmfulFactors'), \Maatwebsite\Excel\Excel::XLSX);
         return redirect()->back()->with('success', 'Файл успешно добавлен');
     }
 

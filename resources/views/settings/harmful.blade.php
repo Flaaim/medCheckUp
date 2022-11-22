@@ -50,8 +50,17 @@
 
             <div class="form-group my-3">
                 <label for="uploadExcel" class="form-label">Загрузить excel файл</label>
-                <input type="file" name="harmfulFactors" class="form-control " id="uploadExcel" required>
+                <input type="file" name="harmfulFactors" class="form-control  @error('harmfulFactors') is-invalid @enderror" id="uploadExcel" >
             </div>
+        @if(count($errors) > 0)
+            
+            <div class="alert alert-danger alert-block">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+                
+                {{ $errors->first() }} <br>
+                     
+            </div>
+        @endif
             <button type="submit" class="btn btn-primary">Загрузить</button>
         </form>
         @endif
