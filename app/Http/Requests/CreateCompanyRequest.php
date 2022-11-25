@@ -30,7 +30,7 @@ class CreateCompanyRequest extends FormRequest
             'email' => 'required|email:rfc',
             'type_of_ownership' => 'required|max:255',
             'economic_activity' => 'required|max:255',
-            'phone' => 'required|regex:/(\+7)[0-9]{10}/',
+            'phone' => 'required|regex:/\([0-9]{3}\) [0-9]{3}-[0-9]{4}/',
         ];
     }
 }

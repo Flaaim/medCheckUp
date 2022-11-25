@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Direction;
 use App\Models\HarmfulFactor;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Str;
 
 class Company extends Model
 {
@@ -23,7 +25,13 @@ class Company extends Model
         'user_id',
         'status',
     ];
-
+    public function phone():Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => '+7'.$value,
+            get: fn ($value) => Str::substr($value, 2),
+        );
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }

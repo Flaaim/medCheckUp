@@ -1,4 +1,6 @@
 import './bootstrap';
 import '../sass/app.scss';
-import './addFactors.js';
+import './project/addFactors.js';
+import './project/phoneFormat.js';
+import './jquery-input-mask-phone-number.min';
 
