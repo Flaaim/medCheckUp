@@ -8,25 +8,40 @@
         </div>
         
     </div>
-
+    
     <div class="card-body">
         @if(count($harmfulFactors) > 0)
-        <p>Факторы успешно загружены</p>
+        
+        <div class="row align-items-center">
+            <div class="col-4">
+                <span>Факторы успешно загружены</span>
+            </div>
+            <div class="col-4">
+                <form action="{{route('harmfulfactors.delete.all', $company)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-primary my-3">Удалить все факторы</button>
+                </form>
+            </div>
+            <div class="col-3">
+                <button  class="btn btn-primary" id="addOnefactor">Добавить фактор</button>
+            </div>
+            
+        </div>
             <table class="table">
                 <th>Профессия/Должность</th>
                 <th>Вредный фактор/Вид деятельности</th>
                 <th>Действия</th>
                 
                     @foreach($harmfulFactors as $factor)
-                        <tr>
-                            <input type="hidden" class="form-control {{$factor->id}}" value="{{$factor->id}}">
-                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->profession}}" disabled required>
+                        <tr id="{{$loop->iteration}}">
+                            <input type="hidden" name="id" class="form-control data" value="{{$factor->id}}">
+                            <td><input type="text" name="profession" class="form-control data" value="{{$factor->profession}}" required>
                             </td>
-                            <td><input type="text" class="form-control {{$factor->id}}" value="{{$factor->harmfulfactor}}" disabled required>
+                            <td><input type="text" name="harmfulfactor" class="form-control data" value="{{$factor->harmfulfactor}}"  required>
                                 </td>
                             <td>
-                                <button id="{{$factor->id}}" class="btn btn-link save" disabled>Сохранить</button>
-                                <button id="{{$factor->id}}" class="btn btn-link changeFactor">Изменить</button>
+                                <button id="{{$loop->iteration}}" class="btn btn-link save">Сохранить</button>
                                 <form action="{{route('harmful.destroy', $factor)}}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -38,11 +53,8 @@
                     @endforeach
                 <tr></tr>
             </table>
-            <form action="{{route('harmfulfactors.delete.all', $company)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-primary">Удалить все факторы</button>
-            </form>
+
+
             
        @else
         <form action="{{route('harmfulfactors.import')}}" method="POST" enctype="multipart/form-data">
@@ -67,18 +79,17 @@
     </div>
 </div>
 <script>
-    $('.changeFactor').click(function(){
-        let id = $(this).prop('id');
-        $('.'+id).prop('disabled', false);
-        $('#'+id).prop('disabled', false);
-    })
+    
     $('.save').click(function(){
         let id = $(this).prop('id')
+        console.log(id)
         const arr = [];
-        $('.'+id).each(function(){
+        
+        $('#'+id+' .data').each(function(){
             arr.push($(this).val());
         })
-        console.log(arr)
+        console.log(arr);
+        
         $.ajax({
             url: "{{route('harmful.save')}}",
             method: "POST",
@@ -86,11 +97,69 @@
             dataType: "json",
             success: function(data){
                 console.log(data)
-                $('.'+data.updateFactors.id).prop('disabled', true);
-                $('#'+data.updateFactors.id).prop('disabled', true);
+                $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>`+data.message.message+`</strong>
+                    </div>`
+                    ).prependTo('.col-md-10');
             }
         })
+        
     })
 
+        $('#addOnefactor').one('click',function(){
+            let tr = $(`
+                <tr>
+                    <td>Профессия/Должность</td>
+                    <td>Вредный фактор/Вид деятельности</td>
+                </tr>
+                <tr id="saveNewFactor">
+                    <td><input type="text" name="profession" class="form-control"></td>
+                    <td><input type="text" name="harmfulfactor" class="form-control"></td>
+                    <td><button class="btn btn-link saveNewFactor" >Сохранить</button></td>
+                </tr>`).prependTo('.table');
+        })
+
+        
+    
+
+
+    $('.table').on('click', '.saveNewFactor', function(){
+        const arr = [];
+        $('#saveNewFactor input').each(function(){
+            arr.push($(this).val());
+        })
+        $('#flashmessage').remove();
+        if(!$("#saveNewFactor input[name='profession']").val() || !$("#saveNewFactor input[name='harmfulfactor']").val()){
+                $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Ошибка. Поля должны быть заполнены!</strong>
+                    </div>`
+                    ).prependTo('.col-md-10');
+            } else {
+                console.log(arr)
+                $('.saveNewFactor').attr('disabled', true);
+            $.ajax({
+            url: "{{route('harmful.save')}}",
+            method: "POST",
+            data: {arr:arr},
+            dataType: "json",
+            success: function(data){
+                console.log(data)
+                $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Профессия и фактор успешно добавлены!</strong>
+                    </div>`
+                    ).prependTo('.col-md-10');
+                window.setTimeout(location.reload(true), 3000);
+            },error(data){
+
+            }
+        })
+        
+            }
+
+        
+    })
 
 </script>

@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Harmfulfactor;
 use App\Http\Services\SettingService;
 use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Validator;
 
 class HarmfulController extends BaseController
 {
@@ -45,11 +46,22 @@ class HarmfulController extends BaseController
 
 
     public function save(Request $request){
+        $validator = Validator::make($request->all(), [
+            'profession' => 'required|unique',
+            'harmfulfactor' => 'required',
+        ]);
+        if($validator->fails()){
+            if($request->ajax()){
+                return response()->json([
+                    'message' => $validator->getMessageBag()->toArray()
+                ]);
+        }
+        }
         if($request->ajax()){
-            $this->service->updateFactors($request);
-            $updateFactors = Harmfulfactor::where('id', $request->arr['0'])->first();
+            $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+            $this->service->saveFactors($request, $company);
             return response()->json([
-                'updateFactors' => $updateFactors
+                'message' => 'Профессия и факторы успешно добавлены в таблицу',
             ]);
         }
     }
