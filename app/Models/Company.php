@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Direction;
 use App\Models\HarmfulFactor;
+use App\Models\Medicalclinic;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Str;
 
@@ -42,5 +43,9 @@ class Company extends Model
 
     public function harmfulfactors(){
         return $this->hasMany(Harmfulfactor::class);
+    }
+
+    public function medicalclinic(){
+        return $this->hasOne(Medicalclinic::class);
     }
 }
