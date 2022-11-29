@@ -4,7 +4,7 @@ return [
     'required' => 'Поле :attribute обязательно к заполнению.',
     'email' => 'Некоректный :attribute ',
     'regex' => 'Неверный формат :attribute',
-    'unique' => 'Данный :attribute уже зарегистрирован',
+    'unique' => 'Поле :attribute с таким значением уже есть',
     'confirmed' => 'Поля :attribute не совпадают',
     'integer' => 'Поле :attribute должен быть числом.',
     'min' => [
@@ -43,5 +43,6 @@ return [
         'factors' => 'факторы',
         'number' => 'номер направления',
         'harmfulFactors' => 'файл',
+        'harmfulfactor' => 'вредный фактор'
     ],
 ];
