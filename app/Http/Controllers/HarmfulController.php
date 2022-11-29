@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\HarmfulRequest;
 use App\Http\Controllers\BaseController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\HarmfulfactorsImport;
@@ -45,28 +46,16 @@ class HarmfulController extends BaseController
     }
 
 
-    public function save(Request $request){
-        $validator = Validator::make($request->all(), [
-            'profession' => 'required|unique',
-            'harmfulfactor' => 'required',
-        ]);
-        if($validator->fails()){
-            if($request->ajax()){
-                return response()->json([
-                    'message' => $validator->getMessageBag()->toArray()
-                ]);
-        }
-        }
-        if($request->ajax()){
+    public function save(HarmfulRequest $request){
             $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
             $this->service->saveFactors($request, $company);
-            return response()->json([
-                'message' => 'Профессия и факторы успешно добавлены в таблицу',
-            ]);
-        }
+             return response()->json([
+                'message' => "Данные успешно добавлены в таблицу!",
+            ]);   
     }
+        
     public function destroy(Harmfulfactor $factor){
         $factor->delete();
-        return redirect()->back()->with('success', 'Запись успшено удалена');
+        return redirect()->back()->with('success', 'Запись успешно удалена');
     }
 }

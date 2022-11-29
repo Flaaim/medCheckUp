@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
 use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {

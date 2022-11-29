@@ -32,11 +32,11 @@
                 <th>Профессия/Должность</th>
                 <th>Вредный фактор/Вид деятельности</th>
                 <th>Действия</th>
-                
                     @foreach($harmfulFactors as $factor)
                         <tr id="{{$loop->iteration}}">
                             <input type="hidden" name="id" class="form-control data" value="{{$factor->id}}">
-                            <td><input type="text" name="profession" class="form-control data" value="{{$factor->profession}}" required>
+                            <td>
+                                <input type="text" name="profession" class="form-control data" value="{{$factor->profession}}" required>
                             </td>
                             <td><input type="text" name="harmfulfactor" class="form-control data" value="{{$factor->harmfulfactor}}"  required>
                                 </td>
@@ -53,9 +53,6 @@
                     @endforeach
                 <tr></tr>
             </table>
-
-
-            
        @else
         <form action="{{route('harmfulfactors.import')}}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -82,28 +79,28 @@
     
     $('.save').click(function(){
         let id = $(this).prop('id')
-        console.log(id)
-        const arr = [];
+        const data = {};
         
         $('#'+id+' .data').each(function(){
-            arr.push($(this).val());
+            data[$(this).attr('name')] = $(this).val()
         })
-        console.log(arr);
+        console.log(data);
         
         $.ajax({
             url: "{{route('harmful.save')}}",
             method: "POST",
-            data: {arr:arr},
+            data: {data:data},
             dataType: "json",
             success: function(data){
                 console.log(data)
                 $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>`+data.message.message+`</strong>
+                    <strong>`+data.message+`</strong>
                     </div>`
-                    ).prependTo('.col-md-10');
+                ).prependTo('.col-md-10');
             }
         })
+        
         
     })
 
@@ -114,9 +111,9 @@
                     <td>Вредный фактор/Вид деятельности</td>
                 </tr>
                 <tr id="saveNewFactor">
-                    <td><input type="text" name="profession" class="form-control"></td>
-                    <td><input type="text" name="harmfulfactor" class="form-control"></td>
-                    <td><button class="btn btn-link saveNewFactor" >Сохранить</button></td>
+                    <td><input type="text" name="profession" class="form-control" required></td>
+                    <td><input type="text" name="harmfulfactor" class="form-control" required></td>
+                    <td><button class="btn btn-link saveNewFactor" onClick="form.submit()">Сохранить</button></td>
                 </tr>`).prependTo('.table');
         })
 
@@ -125,39 +122,32 @@
 
 
     $('.table').on('click', '.saveNewFactor', function(){
-        const arr = [];
+        const data = {};
         $('#saveNewFactor input').each(function(){
-            arr.push($(this).val());
+            data[$(this).attr('name')] = $(this).val()
         })
-        $('#flashmessage').remove();
-        if(!$("#saveNewFactor input[name='profession']").val() || !$("#saveNewFactor input[name='harmfulfactor']").val()){
-                $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Ошибка. Поля должны быть заполнены!</strong>
-                    </div>`
-                    ).prependTo('.col-md-10');
-            } else {
-                console.log(arr)
-                $('.saveNewFactor').attr('disabled', true);
+        
+        console.log(data)
+        $('.saveNewFactor').attr('disabled', true);
             $.ajax({
             url: "{{route('harmful.save')}}",
             method: "POST",
-            data: {arr:arr},
+            data: {data:data},
             dataType: "json",
             success: function(data){
                 console.log(data)
+                data.errors.profession ? profession = data.errors.profession : profession = ""
+                data.errors.harmfulfactor ? harmfulfactor = data.errors.harmfulfactor : harmfulfactor = ""
                 $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Профессия и фактор успешно добавлены!</strong>
-                    </div>`
-                    ).prependTo('.col-md-10');
+                    <strong>`+profession+`</strong>
+                    <strong>`+harmfulfactor+`</strong>
+                    </div>`).prependTo('.col-md-10');
                 window.setTimeout(location.reload(true), 3000);
-            },error(data){
-
             }
-        })
+            })
         
-            }
+        
 
         
     })

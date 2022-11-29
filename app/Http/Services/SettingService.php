@@ -4,20 +4,21 @@ namespace App\Http\Services;
 
 use App\Models\Harmfulfactor;
 
+
 class SettingService {
 
     public function saveFactors($request, $company){
-        if(count($request->arr) == 3){
-            return Harmfulfactor::where('id', $request->arr['0'])->update([
-                'profession' => $request->arr['1'],
-                'harmfulfactor' => $request->arr['2'],
+        if(count($request->data) == 3){
+            return Harmfulfactor::where('id', $request->data['id'])->update([
+                'profession' => $request->data['profession'],
+                'harmfulfactor' => $request->data['harmfulfactor'],
             ]);
         } else {
             return Harmfulfactor::create([
-                'profession' => $request->arr['0'],
-                'harmfulfactor' => $request->arr['1'],
+                'profession' => $request->data['profession'],
+                'harmfulfactor' => $request->data['harmfulfactor'],
                 'company_id' => $company->id
             ]);
-        }
+        } 
     }
 }
