@@ -28,7 +28,7 @@
             </div>
             
         </div>
-            <table class="table">
+            <table class="table table-striped">
                 <th>Профессия/Должность</th>
                 <th>Вредный фактор/Вид деятельности</th>
                 <th>Действия</th>
@@ -84,7 +84,6 @@
         $('#'+id+' .data').each(function(){
             data[$(this).attr('name')] = $(this).val()
         })
-        console.log(data);
         
         $.ajax({
             url: "{{route('harmful.save')}}",
@@ -92,18 +91,11 @@
             data: {data:data},
             dataType: "json",
             success: function(data){
-                console.log(data)
-                $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>`+data.message+`</strong>
-                    </div>`
-                ).prependTo('.col-md-10');
+            showMessage(data)
+            window.setTimeout(location.reload(true), 3000);
             }
         })
-        
-        
     })
-
         $('#addOnefactor').one('click',function(){
             let tr = $(`
                 <tr>
@@ -113,13 +105,9 @@
                 <tr id="saveNewFactor">
                     <td><input type="text" name="profession" class="form-control" required></td>
                     <td><input type="text" name="harmfulfactor" class="form-control" required></td>
-                    <td><button class="btn btn-link saveNewFactor" onClick="form.submit()">Сохранить</button></td>
+                    <td><button class="btn btn-link saveNewFactor">Сохранить</button></td>
                 </tr>`).prependTo('.table');
         })
-
-        
-    
-
 
     $('.table').on('click', '.saveNewFactor', function(){
         const data = {};
@@ -127,7 +115,6 @@
             data[$(this).attr('name')] = $(this).val()
         })
         
-        console.log(data)
         $('.saveNewFactor').attr('disabled', true);
             $.ajax({
             url: "{{route('harmful.save')}}",
@@ -135,21 +122,27 @@
             data: {data:data},
             dataType: "json",
             success: function(data){
-                console.log(data)
-                data.errors.profession ? profession = data.errors.profession : profession = ""
-                data.errors.harmfulfactor ? harmfulfactor = data.errors.harmfulfactor : harmfulfactor = ""
-                $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+            showMessage(data)
+            window.setTimeout(location.reload(true), 3000);
+            }
+            })
+    })
+
+    function showMessage(data){
+        if(data.hasOwnProperty('errors')){
+                    let profession = data.errors.profession
+                    let harmfulfactor = data.errors.harmfulfactor
+                    $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>`+profession+`</strong>
                     <strong>`+harmfulfactor+`</strong>
                     </div>`).prependTo('.col-md-10');
-                window.setTimeout(location.reload(true), 3000);
-            }
-            })
-        
-        
-
-        
-    })
+        } else{
+        $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>`+data.message+`</strong>
+                    </div>`).prependTo('.col-md-10');
+        }
+    }
 
 </script>

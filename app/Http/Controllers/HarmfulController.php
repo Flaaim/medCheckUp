@@ -24,8 +24,7 @@ class HarmfulController extends BaseController
     public function index(Request $request){
         
         $company = Company::where('user_id', $request->user()->id)->where('status', '1')->first();
-        
-        $harmfulFactors = Harmfulfactor::where('company_id', $company->id)->get();
+        $harmfulFactors = Harmfulfactor::where('company_id', $company->id)->orderBy('profession','ASC')->get();
         $this->content = view('settings.harmful')->with(['company' => $company, 'harmfulFactors' => $harmfulFactors])->render();
         return $this->renderOutput();
     }
