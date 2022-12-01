@@ -43,6 +43,11 @@ return [
         'factors' => 'факторы',
         'number' => 'номер направления',
         'harmfulFactors' => 'файл',
-        'harmfulfactor' => 'вредный фактор'
+        'harmfulfactor' => 'вредный фактор',
+        'clinicName' => 'наименование медучреждения',
+        'clinicAddress' => 'адрес',
+        'clinicOgrn' => 'код по ОГРН',
+        'clinicEmail' => 'адрес эл.почты',
+        'clinicPhone' => 'номер телефона',
     ],
 ];

@@ -14,32 +14,32 @@
         <p>
             <a href="{{route('harmfulfactors.index')}}">Настроить импорт</a>
         </p>
-        <h4>Указать медицинское учреждение</h4>
-        <p>Ниже вы можете указать наименование медициского учреждения. Указанные данные будут заполняться в направлении автоматически</p>
-        <form action="{{route('settings.saveMedicalClinic')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="name">Наименование медицинского учреждения</label>
-                <input type="text" name="name" class="form-control" id="name">
+        <h4>Медицинское медучреждение</h4>
+        @if($medclinic)
+        <p>
+            Медицинское учреждение успешно добавлено. Отметьте флажок, чтобы активировать добавление медицинского учреждения в форму направления.
+        </p>
+        <div class="d-flex m-3 align-items-center justify-content-center ">
+            <div class="col-2 form-check">
+                <label class="form-check-label" for="medclinic">Активировать</label>
+                <input type="checkbox" class="form-check-input" name="" value="" id="medclinic">
             </div>
-            <div class="form-group">
-                <label for="address">Адрес</label>
-                <input type="text" name="address" class="form-control" id="address">
+            <div class="col-6 text-center">{{$medclinic->clinicName}}</div>
+            <div class="col-2 text-center"><a href="{{route('medclinic.edit', $medclinic)}}">Изменить</a></div>
+            <div class="col-2 text-center">
+                <form action="{{route('medclinic.destroy', $medclinic)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-link" type="submit">Удалить</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="ogrn">Код по ОГРН</label>
-                <input type="text" name="ogrn" class="form-control" id="ogrn">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" id="email">
-            </div>
-            <div class="form-group">
-                <label for="phone">Номер телефона</label>
-                <input type="phone" name="phone" class="form-control" id="phone">
-            </div>
-            <p></p>
-            <button class="btn btn-primary" type="submit">Сохранить</button>
-        </form>
+        </div>
+        @else
+        <p>Ниже вы можете добавить медициского учреждения. При выборе учреждения, указанные данные будут заполняться в направлении автоматически</p>
+        <p>
+            <a href="{{route('medclinic.create')}}">Добавить медучреждение</a>
+        </p>
+        @endif
     </div>
 </div>
+

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#phone').usPhoneFormat({
+    $('#phone,#clinicPhone').usPhoneFormat({
         format: '(xxx) xxx-xxxx',
     });   
 });

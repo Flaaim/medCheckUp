@@ -79,6 +79,17 @@ Breadcrumbs::for('harmfulfactors.index', function(BreadcrumbTrail $trail){
     $trail->push('Импорт факторов', route('harmfulfactors.index'));
 });
 
+    # Medclinic
+
+Breadcrumbs::for('medclinic.create', function(BreadcrumbTrail $trail){
+    $trail->parent('settings');
+    $trail->push('Медучреждение', route('medclinic.create'));
+});
+Breadcrumbs::for('medclinic.edit', function(BreadcrumbTrail $trail, $medclinic){
+    $trail->parent('settings');
+    $trail->push('Медучреждение', route('medclinic.edit', $medclinic));
+});
+
     # 404 
 Breadcrumbs::for('fallback', function(BreadcrumbTrail $trail){
     $trail->parent('home');

@@ -59,4 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new CustomVerifyEmailNotification);
     }
+
+    public function getActiveCompany(){
+        return Company::where('user_id', $this->id)->where('status', '1')->first();
+    }
 }
