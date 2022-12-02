@@ -23,7 +23,8 @@ class MedicalclinicController extends BaseController
     }
 
     public function store(ClinicRequest $request){
-        $this->service->save($request, new Medicalclinic, $this->company);
+        $company = $this->user->getActiveCompany();
+        $this->service->save($request, new Medicalclinic, $company);
         return redirect()->route('settings')->with('success', 'Медицинское учреждение успешно добавлено');
     }
 
@@ -33,7 +34,8 @@ class MedicalclinicController extends BaseController
     }
 
     public function update(ClinicRequest $request, Medicalclinic $medclinic){
-        $this->service->save($request, $medclinic, $this->company);
+        $company = $this->user->getActiveCompany();
+        $this->service->save($request, $medclinic, $company);
         return redirect()->route('settings')->with('success', 'Медицинское учреждение успешно изменено');
     }
 

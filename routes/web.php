@@ -17,14 +17,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->name('
 
 Auth::routes(['verify' => true]);
 
-
-
-
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    
-
 
     Route::group(['prefix' => 'companies'], function(){
         Route::get('/create', [App\Http\Controllers\CompanyController::class, 'create'])->name('company.create');
@@ -53,7 +47,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             Route::post('/export/{company}', [App\Http\Controllers\DirectionController::class, 'export'])->name('direction.export');
         
             Route::post('/loadfactors', [App\Http\Controllers\DirectionController::class, 'loadfactors'])->name('direction.loadfactors');
-            Route::post('/loadHarmfulFactors', [App\Http\Controllers\DirectionController::class, 'loadHarmfulFactors'])->name('direction.loadHarmfulFactors');
+            Route::post('/loadProfessions', [App\Http\Controllers\DirectionController::class, 'loadProfessions'])->name('direction.loadProfessions');
         });
 
         /* 

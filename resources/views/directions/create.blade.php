@@ -161,24 +161,6 @@
                     </div>
                 </div>
 
-<script>
-    $('#profession').change(function(){
-        let profession = $('#profession option:selected').val()
-       
-        $.ajax({
-            url: '{{route('direction.loadHarmfulFactors')}}',
-            method: "POST",
-            data:{profession:profession},
-            dataType: "json",
-            success: function(data){
-                loadHarmfulFactors(data)
-            }
-        })
-    })
-    function loadHarmfulFactors(data){
-        $('#factors').val(data.harmFulfactor.harmfulfactor)
-    }
-</script>
 
     
     

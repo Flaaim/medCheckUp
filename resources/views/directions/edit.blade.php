@@ -63,10 +63,27 @@
                                 <input type="text" class="form-control" id="department" name="department" value="{{$direction->department}}">
                             </div>
                             <p></p>
+                            @if(count($harmfulFactors) > 0)
+                            <div class="form-group">
+                                <label for="profession">{{__('direction.profession')}}</label>
+                                <select name="profession" class="form-control @error('profession') is-invalid @enderror" id="profession">
+                                    <option value="" selected disabled hidden>Выберите профессию</option>
+                                    @foreach($harmfulFactors as $factor)
+                                        <option  value="{{$factor->profession}}" {{$direction->profession == $factor->profession ? 'selected' : ''}}>{{$factor->profession}}</option>
+                                    @endforeach
+                                </select>
+                                @error('profession')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            @else
                             <div class="form-group">
                                 <label for="profession">{{__('direction.profession')}}</label>
                                 <input type="text" class="form-control" id="profession" name="profession" value="{{$direction->profession}}">
                             </div>
+                            @endif
                             <p></p>
                             <div class="form-group">
                                 <label for="factors">{{__('direction.factors')}}</label>

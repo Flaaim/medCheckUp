@@ -45,11 +45,13 @@ class DirectionController extends BaseController
     }
 
     public function edit(Direction $direction){
+        $company = $this->user->getActiveCompany();
         $gender = ['М', 'Ж'];
         $typeOfDirection = ['Предварительный', 'Периодический'];
         $oldPsychofactors = $direction->psychofactors;
         $psychofactors = Psychofactor::all();
-        $this->content = view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors]);
+        $harmfulFactors = $company->harmfulfactors;
+        $this->content = view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
 
@@ -109,7 +111,7 @@ class DirectionController extends BaseController
         }
     }
 
-    public function loadHarmfulFactors(Request $request){
+    public function loadProfessions(Request $request){
         if($request->ajax()){
             $harmFulfactor = Harmfulfactor::where('profession', $request->profession)->first();
             return response()->json([
