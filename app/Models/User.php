@@ -15,6 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -61,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function getActiveCompany(){
-        return Company::where('user_id', $this->id)->where('status', '1')->first();
+        return Company::where('user_id', $this->id)->where('status', Company::ACTIVE)->first();
     }
+
+    public function setActiveCompany(){
+        return Company::where('user_id', $this->id)->first()->update(['status' => Company::ACTIVE]); 
+    }
+
 }

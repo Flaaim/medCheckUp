@@ -12,17 +12,16 @@ class BaseController extends Controller
     protected $user;
     protected $template;
     protected $vars;
-    protected $company;
+    
 
     public function __construct(){
         $this->template = 'main.main';
         
         $this->middleware(function($request, $next) {
             $this->user = Auth::user();
-            $this->company = $this->user->getActiveCompany();
             return $next($request);
-
         });
+
     }
 
 

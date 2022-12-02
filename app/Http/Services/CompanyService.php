@@ -7,24 +7,22 @@ use App\Models\Company;
 class CompanyService {
 
     public function save($request, $model){
-        if(!$model->exists){
+       if(!$model->exists){
             $request->merge(['user_id'=>$request->user()->id]);
             $request->merge(['status' => $this->setStatus($request)]);
         } 
-        $model->fill($request->all());
+        $model->fill($request->only($model->getFillable()));
         $model->save();
         return true;
     }
 
     public function setStatus($request){
-        return count(Company::where('user_id', $request->user()->id)->get()) == 0 ? "1" : "0";
+        return count(Company::where('user_id', $request->user()->id)->get()) == 0 ? Company::ACTIVE : Company::INACTIVE;
     }
 
     public function changeCompany($request, $user){
-        Company::where('status', '1')->where('user_id', $user->id)->update(['status' => '0']);
-        Company::where('id', $request->id)->where('user_id', $user->id)->update(['status' =>'1']);
+        $user->companies()->where('status', Company::ACTIVE)->update(['status' => Company::INACTIVE]);
+        $user->companies()->where('id', $request->id)->update(['status' => Company::ACTIVE]);
         return true;
     }
-
-
 }

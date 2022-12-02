@@ -14,6 +14,9 @@ class Company extends Model
 {
     use HasFactory;
 
+    const ACTIVE = '1';
+    const INACTIVE = '0';
+    
     protected $fillable = [
         'name', 
         'type_of_ownership',
@@ -26,6 +29,7 @@ class Company extends Model
         'user_id',
         'status',
     ];
+
     public function phone():Attribute
     {
         return Attribute::make(
