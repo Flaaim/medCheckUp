@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Company;
+use App\Models\Medicalclinic;
 
 class ClinicService {
     
@@ -11,6 +12,19 @@ class ClinicService {
         $model->fill($request->only($model->getFillable()));
         $model->save();
         return true;
+    }
+
+    public function updateStatus($request, $user){
+
+       if($request->status == 0){
+            $status = Medicalclinic::ACTIVE;
+       } else {
+            $status = Medicalclinic::INACTIVE;
+       }
+       $user->getActiveCompany()->medicalclinic()->update(['status' => $status]);
+       return $status;
+       
+        
     }
 
 }

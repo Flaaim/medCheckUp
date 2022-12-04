@@ -55,14 +55,14 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
         */
         Route::group(['prefix' => 'settings'], function(){
             Route::get('/', [App\Http\Controllers\SettingController::class, 'index'])->name('settings');
-
-
+            
             Route::group(['prefix'=> 'medclinic'], function(){
                 Route::get('/create', [App\Http\Controllers\MedicalclinicController::class, 'create'])->name('medclinic.create');
                 Route::post('/', [App\Http\Controllers\MedicalclinicController::class, 'store'])->name('medclinic.store');
                 Route::get('/edit/{medclinic}', [App\Http\Controllers\MedicalclinicController::class, 'edit'])->name('medclinic.edit');
                 Route::put('/{medclinic}', [App\Http\Controllers\MedicalclinicController::class, 'update'])->name('medclinic.update');
                 Route::delete('/delete/{medclinic}', [App\Http\Controllers\MedicalclinicController::class, 'destroy'])->name('medclinic.destroy');
+                Route::post('/status', [App\Http\Controllers\MedicalclinicController::class, 'status'])->name('medclinic.status');
             });
 
 

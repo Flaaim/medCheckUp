@@ -43,4 +43,13 @@ class MedicalclinicController extends BaseController
         $medclinic->delete();
         return redirect()->route('settings')->with('success', 'Медицинское учреждение успешно удалено');
     }
+
+    public function status(Request $request){
+        if($request->ajax()){
+            $data = $this->service->updateStatus($request, $this->user);
+            return response()->json([
+                'status' => $data,
+            ]);
+        }
+    }
 }
