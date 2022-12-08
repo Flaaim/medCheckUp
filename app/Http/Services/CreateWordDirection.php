@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use Illuminate\Filesystem\Filesystem;
 use App\Models\Company;
+use App\Models\MedicalClinic;
 use Illuminate\Support\Facades\Storage;
 
 class CreateWordDirection {
@@ -30,7 +31,8 @@ class CreateWordDirection {
     }
 
     public function setValue($template, $direction){
-        //$company = Company::where('status', '1')->first();
+        $clinic = $this->getMedicalClinic($direction);
+        //dd($clinic);
         $company = $direction->company;
         $psyFactor = $this->getPsychoFactors($direction);
         return $template->setValues(array(
@@ -51,8 +53,17 @@ class CreateWordDirection {
             'author_fullname' => $direction->author_fullname,
             'author_profession' => $direction->author_profession,
             'psycho_factors' => $psyFactor,
+
+            # medical clinic
+
+            'clinicName' => $clinic ? $clinic['clinicName'] : '',
+            'clinicAddress' => $clinic ? $clinic['clinicAddress'] : '',
+            'clinicOgrn' => $clinic ? $clinic['clinicOgrn'] : '',
+            'clinicEmail' => $clinic ? $clinic['clinicEmail'] : '',
+            'clinicPhone' => $clinic ? $clinic['clinicPhone'] : ''
         ));
     }
+
     public function getPsychoFactors($direction){
         $psyFactor = "";
         foreach($direction->psychofactors as $factor){
@@ -60,11 +71,21 @@ class CreateWordDirection {
         }
         return $psyFactor;
     }
+
     public function makeDirectory($pathToSave){
         if(!$this->files->isDirectory(dirname($pathToSave))){
             mkdir(dirname($pathToSave), 0777, true);
         }
         return $pathToSave;     
+    }
+
+    public function getMedicalClinic($direction){
+        if($direction->company->medicalclinic->status == MedicalClinic::ACTIVE){
+            $clinic = $direction->company->medicalclinic->toArray();
+        } else {
+            $clinic = [];
+        }
+        return $clinic;
     }
 
 }
