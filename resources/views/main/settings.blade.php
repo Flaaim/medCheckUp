@@ -55,7 +55,7 @@
 
     $('.medclinicStatus').on('click',function(){
         let status = $(this).val()
-        console.log('value= '+status)
+        
         $('.medclinicStatus').attr('disabled', true);
         $.ajax({
             url: "{{route('medclinic.status')}}",
@@ -63,22 +63,29 @@
             data: {status:status},
             dataType: "json",
             success: function(data){
-                
-            console.log('return '+data.status)
             updateStatus(data);
             }
         }) 
         function updateStatus(data){
         $('.medclinicStatus').val(data.status);
         $('.medclinicStatus').attr('disabled', false);
+        showMessage(data)
     }
     })
 
 
-    function showMessage(){
-        $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+    function showMessage(data){
+        if(data.status == 1){
+            $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>Медицинское учреждение успешно активировано. Теперь оно будет отображаться в направлении на медицинский осмотр</strong>
-                    </div>`).prependTo('.col-md-10').fadeOut(5000);
+            </div>`).prependTo('.col-md-10').fadeOut(5000);
+        } else {
+            $(`<div id="flashmessage" class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Медицинское учреждение деактивировано. Теперь оно не будет отображаться в направлении на медицинский осмотр</strong>
+            </div>`).prependTo('.col-md-10').fadeOut(5000);
+        }
+        
     }
 </script>
