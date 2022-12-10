@@ -7,7 +7,6 @@
         <div class="col-md-10">
             @include('components.flash-message')
             {!! $content !!}   
-        
         </div>
     </div>
 @endsection

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use App\Http\Controllers\BaseController;
+use Illuminate\Http\Request;
 
-class VerificationController extends Controller
+class VerificationController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -35,8 +37,22 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+
+    public function show(Request $request)
+    {
+        $this->title = 'Подтверждение адреса электронной почты';
+        $this->title = "Для того чтобы полность воспользоваться функциями сайта, необходимо подтвердить электронную почту";
+        if($request->user()->hasVerifiedEmail()){
+            return redirect($this->redirectPath());
+        }
+        $this->content = view('auth.verify')->render();
+        return $this->renderOutput();
+                    
     }
 }

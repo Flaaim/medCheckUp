@@ -88,5 +88,7 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
 });
 
 Route::any('/404', function(){
-    return response()->view('errors.404', [], 404);
+    $title = "Страница не найдена, 404";
+    $description = "Данная страница не найдена. Ошибка 404";
+    return response()->view('errors.404', ['title' => $title, 'description' => $description], 404);
 })->name('fallback');

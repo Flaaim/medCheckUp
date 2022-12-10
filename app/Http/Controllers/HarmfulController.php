@@ -22,7 +22,8 @@ class HarmfulController extends BaseController
         parent::__construct();
     }
     public function index(Request $request){
-        
+        $this->title = 'Импорт профессий/факторов';
+        $this->description = "Импорт профессий/вредных факторов из таблицы ексель";
         $company = Company::where('user_id', $request->user()->id)->where('status', '1')->first();
         $harmfulFactors = Harmfulfactor::where('company_id', $company->id)->orderBy('profession','ASC')->get();
         $this->content = view('settings.harmful')->with(['company' => $company, 'harmfulFactors' => $harmfulFactors])->render();

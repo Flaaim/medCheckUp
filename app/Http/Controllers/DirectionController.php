@@ -29,8 +29,9 @@ class DirectionController extends BaseController
     }
 
     public function create(){
+        $this->title = 'Новое направление на медицинский осмотр';
+        $this->description = "Создать новое направление на медицинский осмотр";
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-        
         $psychofactors = DB::table('psychofactors')->get();
         $currentNumber = $this->service->getLastNumber($company) + 1;
         $harmfulFactors = HarmfulFactor::where('company_id', $company->id)->get();
@@ -38,6 +39,7 @@ class DirectionController extends BaseController
         $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
+
     public function store(DirectionRequest $request){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         $this->service->save($request, new Direction(), $company);
@@ -45,6 +47,8 @@ class DirectionController extends BaseController
     }
 
     public function edit(Direction $direction){
+        $this->title = 'Изменить направление на медицинский осмотр';
+        $this->description = "Изменение существующего направления на медицинский осмотр";
         $company = $this->user->getActiveCompany();
         $gender = ['М', 'Ж'];
         $typeOfDirection = ['Предварительный', 'Периодический'];
@@ -121,7 +125,8 @@ class DirectionController extends BaseController
     }
 
     public function showExport(Company $company){
-        
+        $this->title = 'Экспорт данных';
+        $this->description = "Экспорт направлений на медицинский осмотр в эксель";
         $this->content = view('directions.export', ['company' => $company])->render();
         return $this->renderOutput();
 

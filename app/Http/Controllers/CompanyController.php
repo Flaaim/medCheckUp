@@ -20,6 +20,8 @@ class CompanyController extends BaseController
     }
     
     public function create(){
+        $this->title = "Новая компания";
+        $this->description = "Форма для создания новой компании";
         $this->content = view('companies.create')->render();
         return $this->renderOutput();
     }
@@ -28,6 +30,8 @@ class CompanyController extends BaseController
         return redirect()->route('home')->with('success', 'Компания успешно создана');
     }
     public function edit(Company $company){
+        $this->title = "Изменить компанию";
+        $this->description = "Форма для изменения компании";
         $this->content = view('companies.edit', ['company' => $company])->render();
         return $this->renderOutput();
     }
@@ -48,6 +52,8 @@ class CompanyController extends BaseController
      */
 
     public function change(){
+        $this->title = "Сменить компанию";
+        $this->description = "Форма для смены компании";
         $companies = $this->user->companies()->where('status', '0')->get();
         $this->content = view('companies.change', ['companies' => $companies]);
         return $this->renderOutput();

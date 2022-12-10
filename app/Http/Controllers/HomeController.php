@@ -28,15 +28,20 @@ class HomeController extends BaseController
      */
     public function welcome(){
         if(!$this->user) {
+            $this->title = 'Выдача направлений на медицинский осмотр';
+            $this->description = "Приложение для выдачи направлений на медицинские осмотры по Приказу Минздрава России от 28.01.2021 N 29н";
             $this->content = view('welcome')->render();
             return $this->renderOutput();
         } 
+        
         return redirect()->route('home'); 
     }
 
 
     public function index(Request $request)
     {
+        $this->title = "Панель управления";
+        $this->description = "Панель управления для создания, изменения, удаления направлений на медицинские осмотры";
         $companies = Company::where('user_id', $this->user->id)->get();
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
 

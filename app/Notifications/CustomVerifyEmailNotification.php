@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Lang;
 
-class CustomVerifyEmailNotification extends VerifyEmail implements ShouldQueue
+class CustomVerifyEmailNotification extends VerifyEmail
 {
     use Queueable;
 

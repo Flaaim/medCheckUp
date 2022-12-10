@@ -9,8 +9,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Controllers\BaseController;
 
-class RegisterController extends Controller
+class RegisterController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +40,16 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('guest');
+    }
+
+    public function showRegistrationForm()
+    {
+        $this->title = "Регистрация на сайте";
+        $this->description = "Используйте данную форму для регистрации на сайте";
+        $this->content = view('auth.register')->render();
+        return $this->renderOutput();
     }
 
     /**
