@@ -18,7 +18,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->name('
 Auth::routes(['verify' => true]);
 
 
-
+Route::group(['prefix' => 'admin'], function(){
+    Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.index');
+});
 
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
