@@ -20,6 +20,11 @@ Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.index');
+
+    Route::group(['prefix' => 'users'], function(){
+        Route::get('/', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users.index');
+    });
+    
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function(){

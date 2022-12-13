@@ -15,6 +15,9 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -58,5 +62,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new CustomVerifyEmailNotification);
+    }
+
+
+    public function verify(){
+        $this->update(['status'=> '1']);
     }
 }

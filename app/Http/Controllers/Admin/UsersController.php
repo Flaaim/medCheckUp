@@ -6,13 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class DashboardController extends Controller
+class UsersController extends Controller
 {
     public function index(){
         $users = User::all();
-        return view('admin.dashboard', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users]);
     }
-
-
-
 }
