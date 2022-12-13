@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
 use Illuminate\Database\QueryException;
+use Symfony\Component\Mailer\Exception\TransportException;
+
+
 
 class Handler extends ExceptionHandler
 {
@@ -66,6 +69,8 @@ class Handler extends ExceptionHandler
                 return redirect()->back()->with('error', 'Неверный формат файла');
             case $e instanceof QueryException:
                 return redirect()->route('home')->with('error', 'Непредвиденная ошибка');
+            case $e instanceof TransportException:
+                return redirect()->back()->with('error', 'Произошла ошибка при отправке письма, если проблема повторяется, обратитесь к администратору');
         }
         return null;
     }

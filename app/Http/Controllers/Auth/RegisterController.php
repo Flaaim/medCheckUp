@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Symfony\Component\Mailer\Exception\TransportException;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -71,5 +74,27 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         
+    }
+
+    public function register(Request $request)
+    {
+        DB::beginTransaction();
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        DB::commit();
+        $this->guard()->login($user);
+        
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        return $user->verify();
     }
 }
