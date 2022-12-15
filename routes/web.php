@@ -17,6 +17,19 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->name('
 
 Auth::routes(['verify' => true]);
 
+
+Route::group(['prefix' => 'admin'], function(){
+    Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.index');
+
+    Route::group(['prefix' => 'users'], function(){
+        Route::get('/', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('admin.users.index');
+        Route::get('/edit/{user}', [App\Http\Controllers\Admin\UsersController::class, 'edit'])->name('admin.users.edit');
+        Route::put('/{user}', [App\Http\Controllers\Admin\UsersController::class, 'update'])->name('admin.users.update');
+        Route::delete('/{user}', [App\Http\Controllers\Admin\UsersController::class, 'destroy'])->name('admin.users.destroy');
+    });
+    
+});
+
 Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

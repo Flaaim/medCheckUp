@@ -9,7 +9,12 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+<<<<<<< HEAD
 use App\Http\Controllers\BaseController;
+=======
+use Illuminate\Http\Request;
+use Symfony\Component\Mailer\Exception\TransportException;
+>>>>>>> adminpanel
 
 class RegisterController extends BaseController
 {
@@ -81,5 +86,10 @@ class RegisterController extends BaseController
             'password' => Hash::make($data['password']),
         ]);
         
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        return $user->verify();
     }
 }

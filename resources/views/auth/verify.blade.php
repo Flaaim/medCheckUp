@@ -4,16 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+                @include('components.flash-message')
             <div class="card">
                 <div class="card-header">{{ __('auth.verify_header') }}</div>
 
                 <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('Новое письмо с ссылкой на активацию отправлено на ваш адрес электронной почты еще раз.') }}
-                        </div>
-                    @endif
-
                     {{ __('auth.verify_body') }}
                     {{ __('Если вы не получили письмо, вы можете') }}
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
