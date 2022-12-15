@@ -10,13 +10,14 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Company;
 use App\Notifications\CustomResetPasswordNotification;
 use App\Notifications\CustomVerifyEmailNotification;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    const ACTIVE = 1;
-    const INACTIVE = 0;
+    const STATUS_ACTIVE = '1';
+    const STATUS_INACTIVE = '0';
 
     /**
      * The attributes that are mass assignable.
@@ -66,6 +67,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     public function verify(){
-        $this->update(['status'=> '1']);
+        $this->update(['status'=> self::STATUS_ACTIVE]);
+    }
+
+    public function getConstants(){
+        $reflector = new \ReflectionClass($this);
+        $constants = $reflector->getConstants();
+        $values = [];
+
+        foreach($constants as $key => $constant){
+            if(Str::contains($key, 'STATUS_')){
+                $values[$key] = $constant;
+            }
+        }
+        return $values;
     }
 }
