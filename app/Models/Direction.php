@@ -75,4 +75,7 @@ class Direction extends Model
         }
         return $array;
     }
+        public function getLastNumber($company){
+        return Direction::where('company_id', $company->id)->max('number') + 1;
+    }
 }

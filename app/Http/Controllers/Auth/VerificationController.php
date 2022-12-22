@@ -46,8 +46,6 @@ class VerificationController extends BaseController
 
     public function show(Request $request)
     {
-        $this->title = 'Подтверждение адреса электронной почты';
-        $this->title = "Для того чтобы полность воспользоваться функциями сайта, необходимо подтвердить электронную почту";
         if($request->user()->hasVerifiedEmail()){
             return redirect($this->redirectPath());
         }

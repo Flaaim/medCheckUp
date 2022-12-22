@@ -8,8 +8,7 @@ use DB;
 class DirectionService 
 {
     
-    public function save($request, $model, $company){
-        
+    public function save($request, $model, $company){ 
         $request->merge(['company_id' => $company->id]);
         $request->merge(['filename' => $request->fullname]);
         $model->fill($request->all());
@@ -18,7 +17,7 @@ class DirectionService
         return true;
     }
     public function insertPsychoFactors($model, $psychofactors){
-        $model->psychofactors()->sync($psychofactors);  
+        $model->psycho_factors()->sync($psychofactors);  
     }
 
     public function getOffSet($page, $limit){
@@ -26,16 +25,16 @@ class DirectionService
     }
     
     public function getCompany($user){
-        return Company::where('status', '1')->where('user_id', $user->id)->first();
+        return Company::where('status', Company::ACTIVE)->where('user_id', $user->id)->first();
     }
     
     public function getDirections($request, $company, $offSet){
         return ($request->keyword == '') ? 
-        Direction::with('psychofactors')->where('company_id', $company->id)
+        Direction::with('psycho_factors')->where('company_id', $company->id)
         ->orderBy($request->field, $request->sort)
                 ->skip($offSet)->take($request->limit)
                     ->get() : 
-        Direction::with('psychofactors')->where('company_id', $company->id)
+        Direction::with('psycho_factors')->where('company_id', $company->id)
             ->orderBy($request->field, $request->sort)
                     ->skip($offSet)->take($request->limit)
                         ->where('fullname', 'LIKE', '%'.$request->keyword.'%')
@@ -76,11 +75,7 @@ class DirectionService
 
         return $firstLast;
     }
-
-
-
     public function getLastNumber($company){
-        return Direction::where('company_id', $company->id)->max('number');
-       
+        return Direction::where('company_id', $company->id)->max('number') + 1;
     }
 }

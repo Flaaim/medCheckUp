@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type_of_ownership')->nullable();
             $table->string('economic_activity')->nullable();
             $table->string('okved')->nullable();
-            $table->string('ogrn')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email');
             $table->timestamps();
 

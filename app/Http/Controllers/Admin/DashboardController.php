@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\BaseController;
 
-class DashboardController extends Controller
+class DashboardController extends BaseController
 {
-    public function index(){
-        $users = User::all();
-        return view('admin.dashboard', ['users' => $users]);
+
+    public function __construct()
+    {
+        parent::__construct();
     }
-
-
-
+    public function index()
+    {
+        $users = User::all();
+        $this->content = view('admin.dashboard', ['users' => $users])->render();
+        return $this->renderOutput();
+    }
 }

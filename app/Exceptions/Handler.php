@@ -68,8 +68,8 @@ class Handler extends ExceptionHandler
                 return redirect()->route('fallback');
             case $e instanceof NoTypeDetectedException:
                 return redirect()->back()->with('error', 'Неверный формат файла');
-            case $e instanceof QueryException:
-                return redirect()->route('home')->with('error', 'Непредвиденная ошибка');
+            //case $e instanceof QueryException:
+                //return redirect()->route('home')->with('error', 'Непредвиденная ошибка');
             case $e instanceof TransportException:
                 return redirect()->back()->with('error', 'Произошла ошибка при отправке письма, если проблема повторяется, обратитесь к администратору');
         }

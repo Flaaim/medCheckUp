@@ -37,19 +37,23 @@ class Company extends Model
             get: fn ($value) => Str::substr($value, 2),
         );
     }
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function directions(){
+    public function directions()
+    {
         return $this->hasMany(Direction::class);
     }
 
-    public function harmfulfactors(){
-        return $this->hasMany(Harmfulfactor::class);
+    public function harmfulFactors()
+    {
+        return $this->hasMany(HarmfulFactor::class);
     }
 
-    public function medicalclinic(){
+    public function medicalclinic()
+    {
         return $this->hasOne(Medicalclinic::class);
     }
 }

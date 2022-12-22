@@ -137,6 +137,7 @@ $.ajaxSetup({
 
         
         function table_post_row(res){
+            
             let htmlView = "";
             let htmlPaginateView = "";
             let htmlRecordsView = "";
@@ -157,7 +158,7 @@ $.ajaxSetup({
                         <td>`+ res.directions[i].fullname +`</td>
                         <td>`+ res.directions[i].profession +`</td>
                         <td>`
-                        res.directions[i].psychofactors.length == 0 ? htmlView += `Нет` : htmlView += `Да`;
+                        res.directions[i].psycho_factors.length == 0 ? htmlView += `Нет` : htmlView += `Да`;
                         htmlView +=  `</td>
                         <td><a href="directions/download/`+res.directions[i].id+`">Скачать</a></td>
                         <td><a href="directions/edit/`+res.directions[i].id+`">Изменить</a></td>

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('psychofactors', function (Blueprint $table) {
+        Schema::create('psycho_factors', function (Blueprint $table) {
             $table->id();
             $table->string('alias');
             $table->string('title');

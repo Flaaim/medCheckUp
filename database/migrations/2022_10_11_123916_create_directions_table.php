@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('profession');
             $table->string('factors');
             $table->timestamps();
-
+            $table->date('date');
+            $table->string('filename');
             $table->bigInteger('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });

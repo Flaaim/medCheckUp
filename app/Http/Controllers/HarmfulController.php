@@ -8,7 +8,7 @@ use App\Http\Controllers\BaseController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\HarmfulfactorsImport;
 use App\Models\Company;
-use App\Models\Harmfulfactor;
+use App\Models\HarmfulFactor;
 use App\Http\Services\SettingService;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Validator;
@@ -17,11 +17,13 @@ class HarmfulController extends BaseController
 {
     protected $service;
 
-    public function __construct(SettingService $service){
+    public function __construct(SettingService $service)
+    {
         $this->service = $service;
         parent::__construct();
     }
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $this->title = 'Импорт профессий/факторов';
         $this->description = "Импорт профессий/вредных факторов из таблицы ексель";
         $company = Company::where('user_id', $request->user()->id)->where('status', '1')->first();
@@ -30,7 +32,8 @@ class HarmfulController extends BaseController
         return $this->renderOutput();
     }
 
-    public function import(Request $request){
+    public function import(Request $request)
+    {
         $request->validate([
             'harmfulFactors' => 'required|file|mimes:xlsx,xls',
         ]);
@@ -40,13 +43,15 @@ class HarmfulController extends BaseController
         return redirect()->back()->with('success', 'Файл успешно добавлен');
     }
 
-    public function deleteAll(Company $company){
+    public function deleteAll(Company $company)
+    {
         Harmfulfactor::where('company_id', $company->id)->delete();
         return redirect()->back()->with('success', 'Файл успешно удален');
     }
 
 
-    public function save(HarmfulRequest $request){
+    public function save(HarmfulRequest $request)
+    {
             $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
             $this->service->saveFactors($request, $company);
              return response()->json([
@@ -54,7 +59,8 @@ class HarmfulController extends BaseController
             ]);   
     }
         
-    public function destroy(Harmfulfactor $factor){
+    public function destroy(Harmfulfactor $factor)
+    {
         $factor->delete();
         return redirect()->back()->with('success', 'Запись успешно удалена');
     }

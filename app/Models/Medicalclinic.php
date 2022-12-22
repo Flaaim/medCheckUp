@@ -9,8 +9,8 @@ class Medicalclinic extends Model
 {
     use HasFactory;
     
-    const ACTIVE = '1';
-    const INACTIVE = '0';
+    const STATUS_ACTIVE = '1';
+    const STATUS_INACTIVE = '0';
 
     protected $fillable = [
         'clinicName',

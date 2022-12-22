@@ -29,14 +29,10 @@ class DirectionController extends BaseController
     }
 
     public function create(){
-        $this->title = 'Новое направление на медицинский осмотр';
-        $this->description = "Создать новое направление на медицинский осмотр";
-        
-        $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
+        $company = Company::where('status', Company::ACTIVE)->where('user_id', $this->user->id)->first();
         $psychofactors = DB::table('psycho_factors')->get();
-        $currentNumber = $this->service->getLastNumber($company) + 1;
+        $currentNumber = $this->service->getLastNumber($company);
         $harmfulFactors = HarmfulFactor::where('company_id', $company->id)->get();
-       
         $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
@@ -48,25 +44,19 @@ class DirectionController extends BaseController
     }
 
     public function edit(Direction $direction){
-        $this->title = 'Изменить направление на медицинский осмотр';
-        $this->description = "Изменение существующего направления на медицинский осмотр";
         $company = $this->user->getActiveCompany();
         $typeOfDirection = ['Предварительный', 'Периодический'];
         $oldPsychofactors = $direction->psycho_factors;
         $psychofactors = Psychofactor::all();
         $harmfulFactors = $company->harmfulFactors;
-       
         $this->content = view('directions.edit', ['direction' => $direction, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
-
     public function update(DirectionRequest $request, Direction $direction){
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
         $this->service->save($request, $direction, $company);
         return redirect()->route('home')->with('success', 'Направление успешно изменено');
     }
-
-
     public function destroy(Direction $direction){
         $direction->delete();
         return redirect()->route('home')->with('success', 'Направление успешно удалено');

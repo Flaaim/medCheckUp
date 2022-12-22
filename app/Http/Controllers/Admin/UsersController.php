@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class UsersController extends Controller
+class UsersController extends BaseController
 {
-    public function index()
+    public function __construct()
     {
-        
+        parent::__construct();
+    }
+    public function index()
+    { 
         $users = User::all();
-        return view('admin.users.index', ['users' => $users]);
+        $this->content = view('admin.users.index', ['users' => $users])->render();
+        return $this->renderOutput();
     }
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', ['user' => $user]);
+        $this->content = view('admin.users.edit', ['user' => $user])->render();
+        return $this->renderOutput();
     }
 
     public function update(Request $request, User $user)

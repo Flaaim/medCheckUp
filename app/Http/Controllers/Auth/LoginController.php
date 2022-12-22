@@ -43,10 +43,7 @@ class LoginController extends BaseController
 
     public function showLoginForm()
     {
-        $this->title = "Аутентификация на сайте";
-        $this->description = "Используйте данную форму входа для аутентификации на сайте";
         $this->content = view('auth.login')->render();
-        
         return $this->renderOutput();
     }
 }

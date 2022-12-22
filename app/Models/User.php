@@ -50,7 +50,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function companies(){
+    public function companies()
+    {
         return $this->hasMany(Company::class);
     }
 
@@ -65,20 +66,24 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new CustomVerifyEmailNotification);
     }
 
-    public function getActiveCompany(){
+    public function getActiveCompany(): Company
+    {
         return Company::where('user_id', $this->id)->where('status', Company::ACTIVE)->first();
     }
 
-    public function setActiveCompany(){
+    public function setActiveCompany(): Company
+    {
         return Company::where('user_id', $this->id)->first()->update(['status' => Company::ACTIVE]); 
     }
 
 
-    public function verify(){
+    public function verify(): void
+    {
         $this->update(['status'=> self::STATUS_ACTIVE]);
     }
 
-    public function getConstants(){
+    public function getConstants(): array
+    {
         $reflector = new \ReflectionClass($this);
         $constants = $reflector->getConstants();
         $values = [];

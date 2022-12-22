@@ -27,8 +27,6 @@ class ForgotPasswordController extends BaseController
 
     public function showLinkRequestForm()
     {
-        $this->title = "Востановление забытого пароля";
-        $this->description = "Форма для восстановления забытого пароля";
         $this->content = view('auth.passwords.email')->render();
         return $this->renderOutput();
     }

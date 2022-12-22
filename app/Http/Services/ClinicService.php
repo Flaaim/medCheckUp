@@ -17,9 +17,9 @@ class ClinicService {
     public function updateStatus($request, $user){
 
        if($request->status == 0){
-            $status = Medicalclinic::ACTIVE;
+            $status = Medicalclinic::STATUS_ACTIVE;
        } else {
-            $status = Medicalclinic::INACTIVE;
+            $status = Medicalclinic::STATUS_INACTIVE;
        }
        $user->getActiveCompany()->medicalclinic()->update(['status' => $status]);
        return $status;
