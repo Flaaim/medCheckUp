@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label for="gender">{{__('direction.gender')}}</label>
                                 <select class="form-control" name="gender" id="gender" >
-                                    @foreach($gender as $value)
+                                    @foreach($direction->getGender() as $key => $value)
                                     <option value="{{$value}}" {{$direction->gender == $value ? 'selected' : ''}}>{{$value}}</option>
                                     @endforeach
                                 </select>

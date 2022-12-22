@@ -14,8 +14,8 @@ use App\Http\Controllers\BaseController;
 use DB;
 use App\Exports\DirectionsExport;
 use Excel;
-use App\Models\Psychofactor;
-use App\Models\Harmfulfactor;
+use App\Models\PsychoFactor;
+use App\Models\HarmfulFactor;
 
 class DirectionController extends BaseController
 {
@@ -31,11 +31,12 @@ class DirectionController extends BaseController
     public function create(){
         $this->title = 'Новое направление на медицинский осмотр';
         $this->description = "Создать новое направление на медицинский осмотр";
+        
         $company = Company::where('status', '1')->where('user_id', $this->user->id)->first();
-        $psychofactors = DB::table('psychofactors')->get();
+        $psychofactors = DB::table('psycho_factors')->get();
         $currentNumber = $this->service->getLastNumber($company) + 1;
         $harmfulFactors = HarmfulFactor::where('company_id', $company->id)->get();
-        
+       
         $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
@@ -50,12 +51,12 @@ class DirectionController extends BaseController
         $this->title = 'Изменить направление на медицинский осмотр';
         $this->description = "Изменение существующего направления на медицинский осмотр";
         $company = $this->user->getActiveCompany();
-        $gender = ['М', 'Ж'];
         $typeOfDirection = ['Предварительный', 'Периодический'];
-        $oldPsychofactors = $direction->psychofactors;
+        $oldPsychofactors = $direction->psycho_factors;
         $psychofactors = Psychofactor::all();
-        $harmfulFactors = $company->harmfulfactors;
-        $this->content = view('directions.edit', ['direction' => $direction, 'gender' => $gender, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors, 'harmfulFactors' => $harmfulFactors]);
+        $harmfulFactors = $company->harmfulFactors;
+       
+        $this->content = view('directions.edit', ['direction' => $direction, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
 

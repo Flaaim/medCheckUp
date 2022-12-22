@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use App\Models\Psychofactor;
+use App\Models\PsychoFactor;
+use Str;
 
 class Direction extends Model
 {
     use HasFactory;
     
+    const GENDER_MALE = 'М';
+    const GENDER_FEMALE = 'Ж';
+
     protected $fillable = [
         'typeOfDirection',
         'fullname',
@@ -28,12 +32,14 @@ class Direction extends Model
     ];
 
 
-    public function company(){
+    public function company()
+    {
         return $this->belongsTo(Company::class);
     }
 
-    public function psychofactors(){
-        return $this->belongsToMany(Psychofactor::class);
+    public function psycho_factors()
+    {
+        return $this->belongsToMany(PsychoFactor::class);
     }
 
     /**
@@ -56,5 +62,17 @@ class Direction extends Model
         set: fn($value) => implode('-', array_reverse(explode('.', $value))),
         get: fn($value) => implode('.', array_reverse(explode('-', $value))),
         );
+    }
+    public function getGender(){
+        $reflection = new \ReflectionClass($this);
+        $constants = $reflection->getConstants();
+        $array = [];
+
+        foreach($constants as $key => $value){
+            if (Str::contains($key, 'GENDER_')){
+                $array[$key] = $value;
+            }
+        }
+        return $array;
     }
 }
