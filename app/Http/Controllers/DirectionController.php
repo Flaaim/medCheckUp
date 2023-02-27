@@ -14,8 +14,8 @@ use App\Http\Controllers\BaseController;
 use DB;
 use App\Exports\DirectionsExport;
 use Excel;
-use App\Models\PsychoFactor;
-use App\Models\HarmfulFactor;
+use App\Models\Psychofactor;
+use App\Models\Harmfulfactor;
 
 class DirectionController extends BaseController
 {
@@ -30,9 +30,9 @@ class DirectionController extends BaseController
 
     public function create(){
         $company = Company::where('status', Company::ACTIVE)->where('user_id', $this->user->id)->first();
-        $psychofactors = DB::table('psycho_factors')->get();
+        $psychofactors = DB::table('psychofactors')->get();
         $currentNumber = $this->service->getLastNumber($company);
-        $harmfulFactors = HarmfulFactor::where('company_id', $company->id)->get();
+        $harmfulFactors = Harmfulfactor::where('company_id', $company->id)->get();
         $this->content = view('directions.create', ['company' => $company, 'psychofactors' => $psychofactors, 'currentNumber' => $currentNumber, 'harmfulFactors' => $harmfulFactors]);
         return $this->renderOutput();
     }
@@ -46,7 +46,7 @@ class DirectionController extends BaseController
     public function edit(Direction $direction){
         $company = $this->user->getActiveCompany();
         $typeOfDirection = ['Предварительный', 'Периодический'];
-        $oldPsychofactors = $direction->psycho_factors;
+        $oldPsychofactors = $direction->psychofactors;
         $psychofactors = Psychofactor::all();
         $harmfulFactors = $company->harmfulFactors;
         $this->content = view('directions.edit', ['direction' => $direction, 'typeOfDirection' => $typeOfDirection, 'psychofactors'=> $psychofactors, 'oldPsychofactors' => $oldPsychofactors, 'harmfulFactors' => $harmfulFactors]);
@@ -70,9 +70,9 @@ class DirectionController extends BaseController
         $template->saveAs($pathToSave);
         
         if(Storage::disk('local')->exists($direction->filename.'.docx')){
-            return response()->download(storage_path().'\\app\\'.$direction->filename.'.docx')->deleteFileAfterSend(true);
+            return response()->download(storage_path().'/app/'.$direction->filename.'.docx')->deleteFileAfterSend(true);
         }
-
+        
     }
 
     public function showDirections(Request $request){

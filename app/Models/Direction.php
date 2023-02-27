@@ -37,9 +37,9 @@ class Direction extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function psycho_factors()
+    public function psychofactors()
     {
-        return $this->belongsToMany(PsychoFactor::class);
+        return $this->belongsToMany(Psychofactor::class);
     }
 
     /**

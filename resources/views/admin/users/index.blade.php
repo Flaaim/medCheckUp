@@ -6,6 +6,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Status</th>
             <th>Actions</th>
         </thead>
@@ -15,6 +16,11 @@
                     <td>{{$user->id}}</td>
                     <td><a href="{{route('admin.users.edit', $user)}}">{{$user->name}}</a></td>
                     <td>{{$user->email}}</td>
+                    <td>
+                        @foreach($user->roles as $role)
+                            {{$role->title}}
+                        @endforeach
+                    </td>
                     <td>
                         @if($user->status) 
                         <span class="badge bg-secondary">Active</span>

@@ -32,7 +32,7 @@ class CreateWordDirection {
 
     public function setValue($template, $direction){
         $clinic = $this->getMedicalClinic($direction);
-        //dd($clinic);
+        
         $company = $direction->company;
         $psyFactor = $this->getPsychoFactors($direction);
         return $template->setValues(array(
@@ -62,6 +62,7 @@ class CreateWordDirection {
             'clinicEmail' => $clinic ? $clinic['clinicEmail'] : '',
             'clinicPhone' => $clinic ? $clinic['clinicPhone'] : ''
         ));
+        
     }
 
     public function getPsychoFactors($direction){
@@ -80,11 +81,11 @@ class CreateWordDirection {
     }
 
     public function getMedicalClinic($direction){
-        if($direction->company->medicalclinic->status == MedicalClinic::ACTIVE){
-            $clinic = $direction->company->medicalclinic->toArray();
-        } else {
-            $clinic = [];
+        if($direction->company->medicalclinic->status == Medicalclinic::STATUS_ACTIVE){
+                $clinic = $direction->company->medicalclinic->toArray();
+                return $clinic;
         }
+        $clinic = [];
         return $clinic;
     }
 

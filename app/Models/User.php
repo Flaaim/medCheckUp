@@ -11,6 +11,7 @@ use App\Models\Company;
 use App\Notifications\CustomResetPasswordNotification;
 use App\Notifications\CustomVerifyEmailNotification;
 use Illuminate\Support\Str;
+use App\Models\Role;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -82,6 +83,11 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->update(['status'=> self::STATUS_ACTIVE]);
     }
 
+    public function setRole(int $role_id, int $user_id): void
+    {
+        $this->roles()->sync([$role_id, $user_id]);
+    }
+
     public function getConstants(): array
     {
         $reflector = new \ReflectionClass($this);
@@ -94,5 +100,19 @@ class User extends Authenticatable implements MustVerifyEmail
             }
         }
         return $values;
+    }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($alias)
+    {
+       foreach($this->roles as $role){
+            if($role->alias == $alias){
+                return true;
+            }
+        }
+        return false;
     }
 }

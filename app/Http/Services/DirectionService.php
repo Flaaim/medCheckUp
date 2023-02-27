@@ -17,7 +17,7 @@ class DirectionService
         return true;
     }
     public function insertPsychoFactors($model, $psychofactors){
-        $model->psycho_factors()->sync($psychofactors);  
+        $model->psychofactors()->sync($psychofactors);  
     }
 
     public function getOffSet($page, $limit){
@@ -30,11 +30,11 @@ class DirectionService
     
     public function getDirections($request, $company, $offSet){
         return ($request->keyword == '') ? 
-        Direction::with('psycho_factors')->where('company_id', $company->id)
+        Direction::with('psychofactors')->where('company_id', $company->id)
         ->orderBy($request->field, $request->sort)
                 ->skip($offSet)->take($request->limit)
                     ->get() : 
-        Direction::with('psycho_factors')->where('company_id', $company->id)
+        Direction::with('psychofactors')->where('company_id', $company->id)
             ->orderBy($request->field, $request->sort)
                     ->skip($offSet)->take($request->limit)
                         ->where('fullname', 'LIKE', '%'.$request->keyword.'%')

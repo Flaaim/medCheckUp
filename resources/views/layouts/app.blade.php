@@ -57,11 +57,11 @@
                             <li class="nav-item">
                                 <a href="{{route('settings')}}" class="nav-link">Настройки</a>
                             </li>
-                            @if(Auth::user()->id == 1)
+                            @can('view', App\Models\Role::class)
                             <li class="nav-item">
                                 <a href="{{route('admin.index')}}" class="nav-link">Admin</a>
                             </li>
-                            @endif
+                            @endcan
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

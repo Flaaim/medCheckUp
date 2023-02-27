@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 
 class UsersController extends BaseController
 {
@@ -14,7 +15,9 @@ class UsersController extends BaseController
     }
     public function index()
     { 
+        $this->authorize('view', Role::class);
         $users = User::all();
+
         $this->content = view('admin.users.index', ['users' => $users])->render();
         return $this->renderOutput();
     }
